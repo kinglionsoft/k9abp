@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Castle.MicroKernel.Registration;
 using NSubstitute;
 using Abp.AutoMapper;
@@ -9,20 +9,20 @@ using Abp.Net.Mail;
 using Abp.TestBase;
 using Abp.Zero.Configuration;
 using Abp.Zero.EntityFrameworkCore;
-using YkAbp.Application;
-using YkAbp.EntityFrameworkCore;
-using YkAbp.Tests.DependencyInjection;
+using K9Abp.Application;
+using K9Abp.EntityFrameworkCore;
+using K9Abp.Tests.DependencyInjection;
 
-namespace YkAbp.Tests
+namespace K9Abp.Tests
 {
     [DependsOn(
-        typeof(YkAbpApplicationModule),
-        typeof(YkAbpEntityFrameworkModule),
+        typeof(K9AbpApplicationModule),
+        typeof(K9AbpEntityFrameworkModule),
         typeof(AbpTestBaseModule)
         )]
-    public class YkAbpTestModule : AbpModule
+    public class K9AbpTestModule : AbpModule
     {
-        public YkAbpTestModule(YkAbpEntityFrameworkModule abpProjectNameEntityFrameworkModule)
+        public K9AbpTestModule(K9AbpEntityFrameworkModule abpProjectNameEntityFrameworkModule)
         {
             abpProjectNameEntityFrameworkModule.SkipDbContextRegistration = true;
         }
@@ -40,7 +40,7 @@ namespace YkAbp.Tests
             // Use database for language management
             Configuration.Modules.Zero().LanguageManagement.EnableDbLocalization();
 
-            RegisterFakeService<AbpZeroDbMigrator<YkAbpDbContext>>();
+            RegisterFakeService<AbpZeroDbMigrator<K9AbpDbContext>>();
 
             Configuration.ReplaceService<IEmailSender, NullEmailSender>(DependencyLifeStyle.Transient);
         }
@@ -60,3 +60,4 @@ namespace YkAbp.Tests
         }
     }
 }
+

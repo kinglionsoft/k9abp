@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
 using Abp.Application.Services.Dto;
-using YkAbp.Application.Users;
-using YkAbp.Application.Users.Dto;
+using K9Abp.Application.Users;
+using K9Abp.Application.Users.Dto;
 
-namespace YkAbp.Tests.Users
+namespace K9Abp.Tests.Users
 {
-    public class UserAppService_Tests : YkAbpTestBase
+    public class UserAppService_Tests : K9AbpTestBase
     {
         private readonly IUserAppService _userAppService;
 
@@ -50,3 +50,4 @@ namespace YkAbp.Tests.Users
         }
     }
 }
+

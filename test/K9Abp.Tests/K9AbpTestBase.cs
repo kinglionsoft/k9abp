@@ -8,19 +8,19 @@ using Abp.Events.Bus;
 using Abp.Events.Bus.Entities;
 using Abp.Runtime.Session;
 using Abp.TestBase;
-using YkAbp.Core.Authorization.Users;
-using YkAbp.Core.MultiTenancy;
-using YkAbp.EntityFrameworkCore;
-using YkAbp.EntityFrameworkCore.Seed.Host;
-using YkAbp.EntityFrameworkCore.Seed.Tenants;
+using K9Abp.Core.Authorization.Users;
+using K9Abp.Core.MultiTenancy;
+using K9Abp.EntityFrameworkCore;
+using K9Abp.EntityFrameworkCore.Seed.Host;
+using K9Abp.EntityFrameworkCore.Seed.Tenants;
 
-namespace YkAbp.Tests
+namespace K9Abp.Tests
 {
-    public abstract class YkAbpTestBase : AbpIntegratedTestBase<YkAbpTestModule>
+    public abstract class K9AbpTestBase : AbpIntegratedTestBase<K9AbpTestModule>
     {
-        protected YkAbpTestBase()
+        protected K9AbpTestBase()
         {
-            void NormalizeDbContext(YkAbpDbContext context)
+            void NormalizeDbContext(K9AbpDbContext context)
             {
                 context.EntityChangeEventHelper = NullEntityChangeEventHelper.Instance;
                 context.EventBus = NullEventBus.Instance;
@@ -56,31 +56,31 @@ namespace YkAbp.Tests
             return new DisposeAction(() => AbpSession.TenantId = previousTenantId);
         }
 
-        protected void UsingDbContext(Action<YkAbpDbContext> action)
+        protected void UsingDbContext(Action<K9AbpDbContext> action)
         {
             UsingDbContext(AbpSession.TenantId, action);
         }
 
-        protected Task UsingDbContextAsync(Func<YkAbpDbContext, Task> action)
+        protected Task UsingDbContextAsync(Func<K9AbpDbContext, Task> action)
         {
             return UsingDbContextAsync(AbpSession.TenantId, action);
         }
 
-        protected T UsingDbContext<T>(Func<YkAbpDbContext, T> func)
+        protected T UsingDbContext<T>(Func<K9AbpDbContext, T> func)
         {
             return UsingDbContext(AbpSession.TenantId, func);
         }
 
-        protected Task<T> UsingDbContextAsync<T>(Func<YkAbpDbContext, Task<T>> func)
+        protected Task<T> UsingDbContextAsync<T>(Func<K9AbpDbContext, Task<T>> func)
         {
             return UsingDbContextAsync(AbpSession.TenantId, func);
         }
 
-        protected void UsingDbContext(int? tenantId, Action<YkAbpDbContext> action)
+        protected void UsingDbContext(int? tenantId, Action<K9AbpDbContext> action)
         {
             using (UsingTenantId(tenantId))
             {
-                using (var context = LocalIocManager.Resolve<YkAbpDbContext>())
+                using (var context = LocalIocManager.Resolve<K9AbpDbContext>())
                 {
                     action(context);
                     context.SaveChanges();
@@ -88,11 +88,11 @@ namespace YkAbp.Tests
             }
         }
 
-        protected async Task UsingDbContextAsync(int? tenantId, Func<YkAbpDbContext, Task> action)
+        protected async Task UsingDbContextAsync(int? tenantId, Func<K9AbpDbContext, Task> action)
         {
             using (UsingTenantId(tenantId))
             {
-                using (var context = LocalIocManager.Resolve<YkAbpDbContext>())
+                using (var context = LocalIocManager.Resolve<K9AbpDbContext>())
                 {
                     await action(context);
                     await context.SaveChangesAsync();
@@ -100,13 +100,13 @@ namespace YkAbp.Tests
             }
         }
 
-        protected T UsingDbContext<T>(int? tenantId, Func<YkAbpDbContext, T> func)
+        protected T UsingDbContext<T>(int? tenantId, Func<K9AbpDbContext, T> func)
         {
             T result;
 
             using (UsingTenantId(tenantId))
             {
-                using (var context = LocalIocManager.Resolve<YkAbpDbContext>())
+                using (var context = LocalIocManager.Resolve<K9AbpDbContext>())
                 {
                     result = func(context);
                     context.SaveChanges();
@@ -116,13 +116,13 @@ namespace YkAbp.Tests
             return result;
         }
 
-        protected async Task<T> UsingDbContextAsync<T>(int? tenantId, Func<YkAbpDbContext, Task<T>> func)
+        protected async Task<T> UsingDbContextAsync<T>(int? tenantId, Func<K9AbpDbContext, Task<T>> func)
         {
             T result;
 
             using (UsingTenantId(tenantId))
             {
-                using (var context = LocalIocManager.Resolve<YkAbpDbContext>())
+                using (var context = LocalIocManager.Resolve<K9AbpDbContext>())
                 {
                     result = await func(context);
                     await context.SaveChangesAsync();
@@ -207,3 +207,4 @@ namespace YkAbp.Tests
         }
     }
 }
+

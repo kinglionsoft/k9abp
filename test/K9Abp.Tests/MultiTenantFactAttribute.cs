@@ -1,16 +1,17 @@
 ﻿using Xunit;
-using YkAbp.Core;
+using K9Abp.Core;
 
-namespace YkAbp.Tests
+namespace K9Abp.Tests
 {
     public sealed class MultiTenantFactAttribute : FactAttribute
     {
         public MultiTenantFactAttribute()
         {
-            if (!YkAbpConsts.MultiTenancyEnabled)
+            if (!K9AbpConsts.MultiTenancyEnabled)
             {
                 Skip = "MultiTenancy is disabled.";
             }
         }
     }
 }
+

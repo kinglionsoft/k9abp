@@ -11,7 +11,7 @@ namespace K9Abp.Rename
 
         static void Main(string[] args)
         {
-            var path = @"D:\Projects\201712_YkAbp\abp\src";
+            var path = @"D:\Projects\201712_YkAbp\abp\test";
             var old = "YkAbp";
             var replaced = "K9Abp";
             ProcessPath(path, old, replaced);

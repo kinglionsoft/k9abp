@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Shouldly;
 using Xunit;
-using YkAbp.Application.Sessions;
+using K9Abp.Application.Sessions;
 
-namespace YkAbp.Tests.Sessions
+namespace K9Abp.Tests.Sessions
 {
-    public class SessionAppService_Tests : YkAbpTestBase
+    public class SessionAppService_Tests : K9AbpTestBase
     {
         private readonly ISessionAppService _sessionAppService;
 
@@ -50,3 +50,4 @@ namespace YkAbp.Tests.Sessions
         }
     }
 }
+

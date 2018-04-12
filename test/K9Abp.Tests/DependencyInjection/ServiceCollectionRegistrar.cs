@@ -4,10 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor.MsDependencyInjection;
 using Abp.Dependency;
-using YkAbp.Core.Identity;
-using YkAbp.EntityFrameworkCore;
+using K9Abp.Core.Identity;
+using K9Abp.EntityFrameworkCore;
 
-namespace YkAbp.Tests.DependencyInjection
+namespace K9Abp.Tests.DependencyInjection
 {
     public static class ServiceCollectionRegistrar
     {
@@ -21,15 +21,16 @@ namespace YkAbp.Tests.DependencyInjection
 
             var serviceProvider = WindsorRegistrationHelper.CreateServiceProvider(iocManager.IocContainer, services);
 
-            var builder = new DbContextOptionsBuilder<YkAbpDbContext>();
+            var builder = new DbContextOptionsBuilder<K9AbpDbContext>();
             builder.UseInMemoryDatabase(Guid.NewGuid().ToString()).UseInternalServiceProvider(serviceProvider);
 
             iocManager.IocContainer.Register(
                 Component
-                    .For<DbContextOptions<YkAbpDbContext>>()
+                    .For<DbContextOptions<K9AbpDbContext>>()
                     .Instance(builder.Options)
                     .LifestyleSingleton()
             );
         }
     }
 }
+
