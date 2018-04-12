@@ -1,0 +1,22 @@
+﻿{
+  "culture": "zh-CN",
+  "texts": {
+    "AllOfThesePermissionsMustBeGranted": "您没有权限进行此操作,您需要以下权限: {0}",
+    "AtLeastOneOfThesePermissionsMustBeGranted": "您没有权限进行此操作,您至少需要下列权限的其中一项: {0}",
+    "CurrentUserDidNotLoginToTheApplication": "当前用户没有登录到系统！",
+    "DefaultFromSenderDisplayName": "默认发件人名字",
+    "DefaultFromSenderEmailAddress": "默认发件人邮箱地址",
+    "DefaultLanguage": "预设语言",
+    "DomainName": "域名",
+    "MainMenu": "主菜单",
+    "Password": "密码",
+    "ReceiveNotifications": "接收通知",
+    "SmtpHost": "SMTP主机",
+    "SmtpPort": "SMTP端口",
+    "TimeZone": "时区",
+    "UseDefaultCredentials": "使用默认验证",
+    "Username": "用户名",
+    "UseSSL": "使用SSL"
+  }
+}
+

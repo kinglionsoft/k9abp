@@ -1,0 +1,21 @@
+﻿{
+  "culture": "zh-CN",
+  "texts": {
+    "AreYouSure": "你确定吗?",
+    "Cancel": "取消",
+    "DefaultError": "发生未知错误！",
+    "DefaultError401": "您还没有登录！",
+    "DefaultError403": "您没有访问权限！",
+    "DefaultError404": "您访问的资源不存在或者已被删除",
+    "DefaultErrorDetail": "Email发送失败",
+    "DefaultErrorDetail401": "请先登录",
+    "DefaultErrorDetail403": "当前用户不允许访问",
+    "DefaultErrorDetail404": "您访问的资源不存在或者已被删除",
+    "EntityNotFound": "ID为{1}的对象({0})不存在！",
+    "InternalServerError": "对不起,在处理您的请求期间,产生了一个服务器内部错误!",
+    "ValidationError": "您的请求无效!",
+    "ValidationNarrativeTitle": "有效性验证失败",
+    "Yes": "确定"
+  }
+}
+

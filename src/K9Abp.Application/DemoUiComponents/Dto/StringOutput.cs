@@ -1,0 +1,7 @@
+﻿namespace K9Abp.Application.DemoUiComponents.Dto
+{
+    public class StringOutput
+    {
+        public string Output { get; set; }
+    }
+}

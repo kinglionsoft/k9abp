@@ -1,0 +1,22 @@
+﻿{
+  "culture": "en",
+  "texts": {
+    "AllOfThesePermissionsMustBeGranted": "Required permissions are not granted. All of these permissions must be granted: {0}",
+    "AtLeastOneOfThesePermissionsMustBeGranted": "Required permissions are not granted. At least one of these permissions must be granted: {0}",
+    "CurrentUserDidNotLoginToTheApplication": "Current user did not login to the application!",
+    "DefaultFromSenderDisplayName": "Default from (sender) display name",
+    "DefaultFromSenderEmailAddress": "Default from (sender) email address",
+    "DefaultLanguage": "Default language",
+    "DomainName": "Domain name",
+    "MainMenu": "Main menu",
+    "Password": "Password",
+    "ReceiveNotifications": "Receive notifications",
+    "SmtpHost": "SMTP host",
+    "SmtpPort": "SMTP port",
+    "TimeZone": "Timezone",
+    "UseDefaultCredentials": "Use default credentials",
+    "Username": "User name",
+    "UseSSL": "Use SSL"
+  }
+}
+

@@ -1,0 +1,21 @@
+﻿{
+  "culture": "en",
+  "texts": {
+    "AreYouSure": "Are you sure?",
+    "Cancel": "Cancel",
+    "DefaultError": "An error has occurred!",
+    "DefaultError401": "You are not authenticated!",
+    "DefaultError403": "You are not authorized!",
+    "DefaultError404": "Resource not found!",
+    "DefaultErrorDetail": "Error detail not sent by server.",
+    "DefaultErrorDetail401": "You should be authenticated (sign in) in order to perform this operation.",
+    "DefaultErrorDetail403": "You are not allowed to perform this operation.",
+    "DefaultErrorDetail404": "The resource requested could not found on the server.",
+    "EntityNotFound": "There is no entity {0} with id = {1}!",
+    "InternalServerError": "An internal error occurred during your request!",
+    "ValidationError": "Your request is not valid!",
+    "ValidationNarrativeTitle": "The following errors were detected during validation.",
+    "Yes": "Yes"
+  }
+}
+
