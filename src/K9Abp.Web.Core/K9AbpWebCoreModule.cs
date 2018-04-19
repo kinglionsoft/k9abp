@@ -5,6 +5,7 @@ using Abp.AspNetCore;
 using Abp.AspNetCore.Configuration;
 using Abp.Configuration.Startup;
 using Abp.Hangfire;
+using Abp.Hangfire.Configuration;
 using Abp.IO;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
