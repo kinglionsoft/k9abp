@@ -4,12 +4,14 @@ using System.Text;
 using Abp.AspNetCore;
 using Abp.AspNetCore.Configuration;
 using Abp.Configuration.Startup;
+using Abp.Dependency;
 using Abp.Hangfire;
 using Abp.Hangfire.Configuration;
 using Abp.IO;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Runtime.Caching.Redis;
+using Abp.Web.Configuration;
 using Abp.Zero.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -107,6 +109,7 @@ namespace K9Abp.Web.Core
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(typeof(K9AbpWebCoreModule).GetAssembly());
+            Configuration.ReplaceService(typeof(AbpUserConfigurationBuilder), typeof(K9AbpUserConfigurationBuilder), DependencyLifeStyle.Transient);
         }
 
         public override void PostInitialize()

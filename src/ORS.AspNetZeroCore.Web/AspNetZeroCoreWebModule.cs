@@ -20,6 +20,3 @@ namespace ORS.AspNetZeroCore.Web
         }
     }
 }
-
-
-
