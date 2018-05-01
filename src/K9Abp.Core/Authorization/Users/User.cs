@@ -1,6 +1,7 @@
 ﻿using System;
 using Abp.Authorization.Users;
 using Abp.Extensions;
+using Abp.Organizations;
 using Abp.Timing;
 
 namespace K9Abp.Core.Authorization.Users
@@ -8,7 +9,7 @@ namespace K9Abp.Core.Authorization.Users
     /// <summary>
     /// Represents a user in the system.
     /// </summary>
-    public class User : AbpUser<User>
+    public class User : AbpUser<User>, IMustHaveOrganizationUnit
     {
         public virtual Guid? ProfilePictureId { get; set; }
 
@@ -20,10 +21,17 @@ namespace K9Abp.Core.Authorization.Users
 
         // TODO: add application specific user properties here
 
+        #region IMustHaveOrganizationUnit
+
+        public virtual long OrganizationUnitId { get; set; }
+
+        #endregion
+
         public User()
         {
-            IsLockoutEnabled = true;
-            IsTwoFactorEnabled = true;
+            IsLockoutEnabled = false;
+            IsTwoFactorEnabled = false;
+            ShouldChangePasswordOnNextLogin = false;
         }
 
         /// <summary>

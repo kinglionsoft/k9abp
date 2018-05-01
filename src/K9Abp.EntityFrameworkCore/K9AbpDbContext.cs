@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using Abp.Domain.Repositories;
+using Abp.Extensions;
 using Abp.IdentityServer4;
 using Abp.Zero.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -43,7 +44,16 @@ namespace K9Abp.EntityFrameworkCore
         public virtual DbSet<PersistedGrantEntity> PersistedGrants { get; set; }
 
         // TODO: Define an IDbSet for each entity of the application 
-        public virtual DbSet<ProductDemo> ProductDemos { get; set; }
+
+        #region iDesk
+
+        public virtual DbSet<iDeskCore.Work.Customer.DeskworkCustomer> DeskworkCustomers { get; set; }
+        public virtual DbSet<iDeskCore.Work.Follower.DeskworkFollower> DeskworkFollowers { get; set; }
+        public virtual DbSet<iDeskCore.Work.Step.DeskworkStep> DeskworkSteps { get; set; }
+        public virtual DbSet<iDeskCore.Work.DeskworkTag> DeskworkTags { get; set; }
+        public virtual DbSet<iDeskCore.Work.Deskwork> Deskworks { get; set; }
+
+        #endregion
 
         public K9AbpDbContext(DbContextOptions<K9AbpDbContext> options)
             : base(options)
@@ -90,6 +100,13 @@ namespace K9Abp.EntityFrameworkCore
             modelBuilder.ConfigurePersistedGrantEntity();
 
             // ApplyEntitiesFromPlugins(modelBuilder);
+
+            // Naming convention
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                var currentTableName = modelBuilder.Entity(entity.Name).Metadata.Relational().TableName;
+                modelBuilder.Entity(entity.Name).ToTable(currentTableName.ToSingular().ToSnakeCase());
+            }
 
             // TODO: configure the model here
         }

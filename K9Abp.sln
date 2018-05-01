@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ORS.AspNetZeroCore", "src\O
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ORS.AspNetZeroCore.Web", "src\ORS.AspNetZeroCore.Web\ORS.AspNetZeroCore.Web.csproj", "{56F6AAA7-5236-40C7-BAE2-B7E1FB514EE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K9Abp.Rename", "src\K9Abp.Rename\K9Abp.Rename.csproj", "{72005E59-2482-4BAB-93F5-C2BF7552F36B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.Rename", "src\K9Abp.Rename\K9Abp.Rename.csproj", "{72005E59-2482-4BAB-93F5-C2BF7552F36B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
