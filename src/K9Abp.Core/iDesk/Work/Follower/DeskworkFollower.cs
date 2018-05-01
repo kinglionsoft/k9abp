@@ -2,18 +2,18 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities;
 
-namespace K9Abp.iDeskCore.Work.Follower
+namespace K9Abp.iDeskCore.Work
 {
-    public class DeskworkFollower: Entity
+    public class DeskworkFollower: Entity<long>
     {
         [Required]
-        public virtual int WorkId { get; set; }
+        public virtual long WorkId { get; internal set; }
 
         [ForeignKey("WorkId")]
         public virtual Deskwork Deskwork { get; set; }
 
         [Required]
-        public virtual int FollowerId { get; set; }
+        public virtual long FollowerId { get; internal set; }
 
         [ForeignKey("FollowerId")]
         public virtual Core.Authorization.Users.User Follower { get; set; }

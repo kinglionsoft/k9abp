@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities.Auditing;
 
-namespace K9Abp.iDeskCore.Work.Step
+namespace K9Abp.iDeskCore.Work
 {
-    public class DeskworkStep: AuditedEntity
+    public class DeskworkStep: AuditedEntity<long>
     {
         [Required]
         public virtual int WorkId { get; set; }

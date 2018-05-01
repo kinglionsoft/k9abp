@@ -18,6 +18,7 @@ using K9Abp.Core.MultiTenancy.Payments;
 using K9Abp.Core.Storage;
 using K9Abp.Core.Web;
 using K9Abp.EntityFrameworkCore.Repositories;
+using K9Abp.iDeskCore.Work;
 
 namespace K9Abp.EntityFrameworkCore
 {
@@ -47,11 +48,11 @@ namespace K9Abp.EntityFrameworkCore
 
         #region iDesk
 
-        public virtual DbSet<iDeskCore.Work.Customer.DeskworkCustomer> DeskworkCustomers { get; set; }
-        public virtual DbSet<iDeskCore.Work.Follower.DeskworkFollower> DeskworkFollowers { get; set; }
-        public virtual DbSet<iDeskCore.Work.Step.DeskworkStep> DeskworkSteps { get; set; }
-        public virtual DbSet<iDeskCore.Work.DeskworkTag> DeskworkTags { get; set; }
-        public virtual DbSet<iDeskCore.Work.Deskwork> Deskworks { get; set; }
+        public virtual DbSet<DeskworkCustomer> DeskworkCustomers { get; set; }
+        public virtual DbSet<DeskworkFollower> DeskworkFollowers { get; set; }
+        public virtual DbSet<DeskworkStep> DeskworkSteps { get; set; }
+        public virtual DbSet<DeskworkTag> DeskworkTags { get; set; }
+        public virtual DbSet<Deskwork> Deskworks { get; set; }
 
         #endregion
 
@@ -101,15 +102,37 @@ namespace K9Abp.EntityFrameworkCore
 
             // ApplyEntitiesFromPlugins(modelBuilder);
 
+            // TODO: configure the model here
+
+            ApplyDeskConfiguration(modelBuilder);
+
             // Naming convention
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
                 var currentTableName = modelBuilder.Entity(entity.Name).Metadata.Relational().TableName;
                 modelBuilder.Entity(entity.Name).ToTable(currentTableName.ToSingular().ToSnakeCase());
             }
-
-            // TODO: configure the model here
         }
+
+        private void ApplyDeskConfiguration(ModelBuilder builder)
+        {
+            builder.Entity<DeskworkCustomer>(b =>
+            {
+                b.HasIndex(x => x.Phone).IsUnique();
+                b.HasIndex(x => x.Name);
+            });
+
+            builder.Entity<DeskworkFollower>(b =>
+            {
+                b.HasIndex(x => x.WorkId);
+                b.HasIndex(x => x.FollowerId);
+            });
+
+            builder.Entity<DeskworkStep>(b => { b.HasIndex(x => x.WorkId); });
+
+            builder.Entity<Deskwork>(b => { b.HasIndex(x => x.CustomerId); });
+        }
+
 
         // 见：http://10.0.200.18/abp/ykabp/issues/1
         protected virtual void ApplyEntitiesFromPlugins(ModelBuilder modelBuilder)

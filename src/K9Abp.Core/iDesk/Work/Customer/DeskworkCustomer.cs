@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities.Auditing;
 
-namespace K9Abp.iDeskCore.Work.Customer
+namespace K9Abp.iDeskCore.Work
 {
-    public class DeskworkCustomer: AuditedEntity
+    public class DeskworkCustomer: AuditedEntity<long>
     {
         [Required]
         [StringLength(11)]
