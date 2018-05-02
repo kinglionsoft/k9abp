@@ -36,6 +36,12 @@ namespace K9Abp.iDeskCore.Work
         public long? RelatedWorkId { get; set; }
 
         [Required]
+        public int TagId { get; set; }
+
+        [StringLength(50)]
+        public string TagName { get; set; } // Redundant
+
+        [Required]
         public virtual long CustomerId { get; set; }
 
         [ForeignKey("CustomerId")]
@@ -60,9 +66,9 @@ namespace K9Abp.iDeskCore.Work
 
         #endregion
 
-        #region AggregateRoot Methods
+        #region Follower
 
-        public void AddFollower(User follower)
+        public void Follow(User follower)
         {
             if (Followers.Any(x => x.FollowerId == follower.Id)) return;
 
@@ -73,14 +79,41 @@ namespace K9Abp.iDeskCore.Work
             });
         }
 
-        public void RemoveFollower(User follower)
+        public void Unfollow(long followerId)
         {
-            var exist = Followers.FirstOrDefault(x => x.FollowerId == follower.Id);
+            var exist = Followers.FirstOrDefault(x => x.FollowerId == followerId);
             if(exist != null)
             {
                 Followers.Remove(exist);
             }
-        }        
+        }
+
+        #endregion
+
+        #region Customer
+
+        public void SetCustomer(DeskworkCustomer customer)
+        {
+            if (CustomerId != customer.Id)
+            {
+                CustomerId = customer.Id;
+                Customer = Customer;
+            }
+        }
+
+        #endregion
+
+
+        #region Tag
+
+        public void SetTagAsync(int tagId, string tagName)
+        {
+            if (TagId != tagId)
+            {
+                TagId = tagId;
+                TagName = tagName;
+            }
+        }
 
         #endregion
     }

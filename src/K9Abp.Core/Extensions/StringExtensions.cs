@@ -85,5 +85,10 @@ namespace Abp.Extensions
 
             return word;
         }
+
+        public static string F(this string template, params object[] args)
+        {
+            return string.Format(template, args);
+        }
     }
 }

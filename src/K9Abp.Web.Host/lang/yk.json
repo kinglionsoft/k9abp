@@ -17,6 +17,7 @@
     "Administration": "管理",
     "HostDashboard": "系统仪表盘",
     "Home": "首页", 
+    "NotFound": "{0}(1)不存在", 
 
     "home": "主页",
     "settings": "设置",

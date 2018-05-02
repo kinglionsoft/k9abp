@@ -1,7 +1,14 @@
-﻿using Abp.Domain.Entities;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
+using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.EntityFrameworkCore;
 using Abp.EntityFrameworkCore.Repositories;
+using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace K9Abp.EntityFrameworkCore.Repositories
 {
@@ -19,6 +26,7 @@ namespace K9Abp.EntityFrameworkCore.Repositories
         }
 
         //TODO:  Add your common methods for all repositories
+      
     }
 
     /// <summary>
