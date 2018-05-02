@@ -83,7 +83,7 @@ namespace K9Abp.Core.Authorization.Users
 
         public User GetUserOrNull(UserIdentifier userIdentifier)
         {
-            return AsyncHelper.RunSync(() => GetUserOrNullAsync(userIdentifier));
+            return AsyncHelper.RunSync(async () => await GetUserOrNullAsync(userIdentifier));
         }
 
         public async Task<User> GetUserAsync(UserIdentifier userIdentifier)
@@ -99,7 +99,7 @@ namespace K9Abp.Core.Authorization.Users
 
         public User GetUser(UserIdentifier userIdentifier)
         {
-            return AsyncHelper.RunSync(() => GetUserAsync(userIdentifier));
+            return AsyncHelper.RunSync(async () => await GetUserAsync(userIdentifier));
         }
 
         public override Task<IdentityResult> SetRoles(User user, string[] roleNames)

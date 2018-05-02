@@ -15,7 +15,7 @@ namespace K9Abp.iDesk
             Configuration.Modules.AbpAspNetCore()
                 .CreateControllersForAppServices(
                     typeof(DeskModule).Assembly,
-                    moduleName: "Desk",
+                    moduleName: "desk",
                     useConventionalHttpVerbs: true);
         }
 

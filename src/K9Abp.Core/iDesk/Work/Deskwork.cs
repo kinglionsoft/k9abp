@@ -6,7 +6,7 @@ using System.Linq;
 using Abp.Auditing;
 using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
-using K9Abp.Core.Authorization.Users;
+using Abp.UI;
 
 namespace K9Abp.iDeskCore.Work
 {
@@ -47,8 +47,16 @@ namespace K9Abp.iDeskCore.Work
         [ForeignKey("CustomerId")]
         public virtual DeskworkCustomer Customer { get; set; }
 
+        /// <summary>
+        /// 时限，单位：小时
+        /// </summary>
+        [Required]
+        public int TimeLimit { get; set; }
+
         [Required]
         public EWorkCompletion Completion { get; set; }
+
+        public DateTime? CompletionTime { get; set; }
 
         public virtual IList<DeskworkStep> Steps { get; set; }
 
@@ -62,59 +70,161 @@ namespace K9Abp.iDeskCore.Work
         {
             Steps = new List<DeskworkStep>();
             Followers = new List<DeskworkFollower>();
+            Status = EWorkStatus.未处理;
         }
 
         #endregion
 
         #region Follower
 
-        public void Follow(User follower)
+        public Deskwork Follow(long followerId)
         {
-            if (Followers.Any(x => x.FollowerId == follower.Id)) return;
+            if (Followers.Any(x => x.FollowerId == followerId)) return this;
 
             Followers.Add(new DeskworkFollower
             {
-                FollowerId = follower.Id,
+                FollowerId = followerId,
                 WorkId = Id
             });
+
+            DomainEvents.Add(new FollowEventData(followerId));
+            return this;
         }
 
-        public void Unfollow(long followerId)
+        public Deskwork Unfollow(long followerId)
         {
             var exist = Followers.FirstOrDefault(x => x.FollowerId == followerId);
-            if(exist != null)
+            if (exist != null)
             {
                 Followers.Remove(exist);
+                DomainEvents.Add(new UnfollowEventData(followerId));
             }
+            return this;
         }
 
         #endregion
 
         #region Customer
 
-        public void SetCustomer(DeskworkCustomer customer)
+        public Deskwork SetCustomer(DeskworkCustomer customer)
         {
             if (CustomerId != customer.Id)
             {
                 CustomerId = customer.Id;
                 Customer = Customer;
             }
+            return this;
         }
 
         #endregion
 
-
         #region Tag
 
-        public void SetTagAsync(int tagId, string tagName)
+        public Deskwork SetTagAsync(int tagId, string tagName)
         {
             if (TagId != tagId)
             {
                 TagId = tagId;
                 TagName = tagName;
             }
+            return this;
         }
 
         #endregion
+
+        #region Step
+
+        private void EnsureActive()
+        {
+            if (!IsActive)
+            {
+                throw new UserFriendlyException($"工单({Id})已关闭");
+            }
+        }
+
+        public Deskwork Complete()
+        {
+            EnsureActive();
+
+            if (Completion != EWorkCompletion.未完成) return this;
+
+            CompletionTime = DateTime.Now;
+
+            if (CreationTime.AddHours(TimeLimit) <= CompletionTime)
+            {
+                Completion = EWorkCompletion.按时完成;
+            }
+            else
+            {
+                Completion = EWorkCompletion.超时完成;
+            }
+
+            foreach (var step in Steps)
+            {
+                step.Completion = Completion; // 工单流程的完成情况与工单一致
+            }
+            
+            DomainEvents.Add(new WorkCompletionEventData());
+            return this;
+        }
+
+        public Deskwork Close()
+        {
+            if (IsActive)
+            {
+                IsActive = false;
+                DomainEvents.Add(new WorkCloseEventData());
+            }
+
+            return this;
+        }
+
+        public Deskwork AddStep(long currentStepId, string result, long? receiverId, string receiverName)
+        {
+            EnsureActive();
+
+            var currentStep = Steps.Single(x => x.Id == currentStepId);
+            if (!currentStep.Done)
+            {
+                throw new UserFriendlyException("当前流程已结束");
+            }
+            currentStep.Complete(result);
+
+            if (receiverId == null)
+            {
+                // 没有转交给他人，直接完成当前工单
+                Complete();
+            }
+            else
+            {
+                CreateStep(currentStep.ReceiverId.Value, currentStep.ReceiverName, receiverId.Value, receiverName);
+            }
+
+            return this;
+        }
+        
+        public Deskwork CreateStep(long currentUserId, string currentUserName, long receiverId, string receiverName)
+        {
+            if (Steps.Count > 0)
+            {
+                throw new UserFriendlyException("首流程已经创建过了");
+            }
+
+            var next = new DeskworkStep
+            {
+                WorkId = Id,
+                AssignerId = currentUserId,
+                AssignerName = currentUserName,
+                ReceiverId = receiverId,
+                ReceiverName = receiverName
+            };
+            Steps.Add(next);
+            DomainEvents.Add(new StepChangeEventData());
+            return this;
+        }
+
+        #endregion
+
+
     }
 }
