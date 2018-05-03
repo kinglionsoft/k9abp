@@ -18,6 +18,8 @@
 
         public const int MaxNameLength = 128;
 
+        public const string NA = "N/A";
+
         /// <summary>
         /// Default pass phrase for SimpleStringCipher decrypt/encrypt operations
         /// </summary>

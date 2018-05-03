@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities.Auditing;
+using Abp.Timing;
 using Abp.UI;
 
 namespace K9Abp.iDeskCore.Work
@@ -15,7 +16,7 @@ namespace K9Abp.iDeskCore.Work
         public virtual Deskwork Deskwork { get; set; }
 
         [Required]
-        public long AssignerId { get; set; }
+        public virtual long AssignerId { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -27,20 +28,41 @@ namespace K9Abp.iDeskCore.Work
         public string ReceiverName { get; set; }
 
         [Required]
+        [StringLength(50)]
+        public string Department { get; set; }
+
+        [Required]
         [StringLength(500)]
         public string Result { get; internal set; }
 
         [Required]
-        public bool Done { get; internal set; }
+        public virtual bool Done { get; internal set; }
 
         public DateTime? CompletionTime { get; internal set; }
 
         [Required]
-        public EWorkCompletion Completion { get; internal set; }
+        public virtual EWorkCompletion Completion { get; internal set; }
 
         public DeskworkStep()
         {
             Completion = EWorkCompletion.未完成;
+        }
+
+        /// <summary>
+        /// Create a new step
+        /// </summary>
+        public DeskworkStep(long assignerId,
+            string assignerName, 
+            long? receiverId, 
+            string receiverName, 
+            string department)
+            : this()
+        {
+            AssignerId = assignerId;
+            AssignerName = assignerName;
+            ReceiverId = receiverId;
+            ReceiverName = receiverName;
+            Department = department;
         }
 
         public void Complete(string result)
@@ -49,7 +71,7 @@ namespace K9Abp.iDeskCore.Work
 
             Result = result;
             Done = true;
-            CompletionTime = DateTime.Now;
+            CompletionTime = Clock.Now;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using Abp.Auditing;
 using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
+using Abp.Timing;
 using Abp.UI;
 
 namespace K9Abp.iDeskCore.Work
@@ -148,7 +149,12 @@ namespace K9Abp.iDeskCore.Work
 
             if (Completion != EWorkCompletion.未完成) return this;
 
-            CompletionTime = DateTime.Now;
+            if (Steps.Any(x => !x.Done))
+            {
+                throw new UserFriendlyException("请先完成所有子流程");
+            }
+
+            CompletionTime = Clock.Now;
 
             if (CreationTime.AddHours(TimeLimit) <= CompletionTime)
             {
@@ -175,11 +181,10 @@ namespace K9Abp.iDeskCore.Work
                 IsActive = false;
                 DomainEvents.Add(new WorkCloseEventData());
             }
-
             return this;
         }
 
-        public Deskwork AddStep(long currentStepId, string result, long? receiverId, string receiverName)
+        public Deskwork CompleteStep(long currentUserId, long currentStepId, string result, DeskworkStep next)
         {
             EnsureActive();
 
@@ -188,37 +193,38 @@ namespace K9Abp.iDeskCore.Work
             {
                 throw new UserFriendlyException("当前流程已结束");
             }
+            if (currentStep.ReceiverId != currentUserId)
+            {
+                throw new UserFriendlyException("不能完成他人的流程");
+            }
             currentStep.Complete(result);
 
-            if (receiverId == null)
+            if (next == null)
             {
                 // 没有转交给他人，直接完成当前工单
                 Complete();
             }
             else
             {
-                CreateStep(currentStep.ReceiverId.Value, currentStep.ReceiverName, receiverId.Value, receiverName);
+                CreateStep(next);
             }
 
             return this;
         }
-        
-        public Deskwork CreateStep(long currentUserId, string currentUserName, long receiverId, string receiverName)
+
+        public Deskwork CreateStep(DeskworkStep step)
         {
+            EnsureActive();
             if (Steps.Count > 0)
             {
-                throw new UserFriendlyException("首流程已经创建过了");
+                var last = Steps.OrderBy(x => x.Id).Last();
+                if (!last.Done)
+                {
+                    throw new UserFriendlyException("请首先完成上一个流程");
+                }
             }
 
-            var next = new DeskworkStep
-            {
-                WorkId = Id,
-                AssignerId = currentUserId,
-                AssignerName = currentUserName,
-                ReceiverId = receiverId,
-                ReceiverName = receiverName
-            };
-            Steps.Add(next);
+            Steps.Add(step);
             DomainEvents.Add(new StepChangeEventData());
             return this;
         }

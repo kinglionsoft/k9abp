@@ -32,16 +32,33 @@ namespace K9Abp.iDesk.Work.EventHandlers
 
         public Task HandleEventAsync(StepChangeEventData eventData)
         {
+            if(eventData.EventSource is Deskwork work)
+            {
+                if (work.Steps.Count == 1)
+                {
+                    // Creation
+                    // Start warning for overtime
+                }
+            }
+
             throw new System.NotImplementedException();
         }
 
         public Task HandleEventAsync(WorkCloseEventData eventData)
         {
+            if (eventData.EventSource is Deskwork work)
+            {
+                // stop warning for overtime
+            }
             throw new System.NotImplementedException();
         }
 
         public Task HandleEventAsync(WorkCompletionEventData eventData)
         {
+            if (eventData.EventSource is Deskwork work)
+            {
+                // stop warning for overtime
+            }
             throw new System.NotImplementedException();
         }
     }

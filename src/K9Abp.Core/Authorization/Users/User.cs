@@ -1,7 +1,6 @@
 ﻿using System;
 using Abp.Authorization.Users;
 using Abp.Extensions;
-using Abp.Organizations;
 using Abp.Timing;
 
 namespace K9Abp.Core.Authorization.Users
@@ -9,7 +8,7 @@ namespace K9Abp.Core.Authorization.Users
     /// <summary>
     /// Represents a user in the system.
     /// </summary>
-    public class User : AbpUser<User>, IMustHaveOrganizationUnit
+    public class User : AbpUser<User>
     {
         public virtual Guid? ProfilePictureId { get; set; }
 
@@ -20,12 +19,6 @@ namespace K9Abp.Core.Authorization.Users
         public string SignInToken { get; set; }
 
         // TODO: add application specific user properties here
-
-        #region IMustHaveOrganizationUnit
-
-        public virtual long OrganizationUnitId { get; set; }
-
-        #endregion
 
         public User()
         {

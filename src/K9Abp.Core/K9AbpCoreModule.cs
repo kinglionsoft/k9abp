@@ -47,7 +47,6 @@ namespace K9Abp.Core
         public override void PreInitialize()
         {
             // Eable entity history storing
-            Configuration.Auditing.IsEnabledForAnonymousUsers = true;
             Configuration.EntityHistory.IsEnabled = true;
 
             // Allow anonymous uesrs
