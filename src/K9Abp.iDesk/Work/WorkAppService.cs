@@ -1,27 +1,22 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Abp.AutoMapper;
 using Abp.Domain.Repositories;
 using Abp.Runtime.Session;
 using Abp.UI;
 using K9Abp.Application;
-using K9Abp.Core.Authorization.Users;
 using K9Abp.iDesk.Work.Dto;
 using K9Abp.iDeskCore.Work;
 using Microsoft.EntityFrameworkCore;
-using OfficeOpenXml.FormulaParsing.Utilities;
 
 namespace K9Abp.iDesk.Work
 {
     public class WorkAppService : K9AbpAppServiceBase, IWorkAppService
     {
         private readonly IRepository<Deskwork, long> _workRepository;
-        public IUserCache UserCache { get; set; }
 
         public WorkAppService(IRepository<Deskwork, long> workRepository)
         {
             _workRepository = workRepository;
-            UserCache = NullUserCache.Instance;
         }
 
         #region Follower

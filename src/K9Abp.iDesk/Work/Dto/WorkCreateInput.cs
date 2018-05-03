@@ -23,7 +23,7 @@ namespace K9Abp.iDesk.Work.Dto
         public int TagId { get; set; }
 
         [Required]
-        public virtual long CustomerId { get; set; }
+        public long CustomerId { get; set; }
 
         /// <summary>
         /// 时限，单位：小时
@@ -33,5 +33,8 @@ namespace K9Abp.iDesk.Work.Dto
 
         [Required]
         public long ReceiverId { get; set; }
+
+        [Required]
+        public long OrganizationUnitId { get; set; }
     }
 }

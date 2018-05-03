@@ -8,11 +8,12 @@ using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using Abp.Timing;
 using Abp.UI;
+using Abp.Organizations;
 
 namespace K9Abp.iDeskCore.Work
 {
     [Audited]
-    public class Deskwork : AuditedAggregateRoot<long>, IPassivable
+    public class Deskwork : AuditedAggregateRoot<long>, IPassivable, IMustHaveOrganizationUnit
     {
         #region IPassivable
         [Required]
@@ -53,6 +54,9 @@ namespace K9Abp.iDeskCore.Work
         /// </summary>
         [Required]
         public int TimeLimit { get; set; }
+
+        [Required]
+        public long OrganizationUnitId { get; set; }
 
         [Required]
         public EWorkCompletion Completion { get; set; }
@@ -230,7 +234,5 @@ namespace K9Abp.iDeskCore.Work
         }
 
         #endregion
-
-
     }
 }

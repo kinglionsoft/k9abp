@@ -21,6 +21,8 @@ namespace K9Abp.Application
 
         public UserManager UserManager { get; set; }
 
+        public IUserCache UserCache { get; set; }
+
         protected K9AbpAppServiceBase()
         {
             LocalizationSourceName = K9AbpConsts.LocalizationSourceName;

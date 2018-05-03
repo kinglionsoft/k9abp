@@ -4,6 +4,6 @@ namespace K9Abp.iDesk.Work
 {
     public interface IWorkAppService
     {
-        Task<bool> Follow(long workId, long followerId);
+        Task<bool> Follow(long workId, long? followerId);
     }
 }
