@@ -20,6 +20,7 @@ using K9Abp.Application;
 using K9Abp.Core;
 using K9Abp.Core.Configuration;
 using K9Abp.EntityFrameworkCore;
+using K9Abp.NgAlain;
 using K9Abp.Web.Core.Authentication.JwtBearer;
 using K9Abp.Web.Core.Authentication.TwoFactor;
 using K9Abp.Web.Core.Configuration;
@@ -31,6 +32,7 @@ using Abp.Web.SignalR;
 namespace K9Abp.Web.Core
 {
     [DependsOn(
+        typeof(K9AbpNgAlainModule),
         typeof(K9AbpApplicationModule),
         typeof(K9AbpEntityFrameworkModule),
         typeof(AbpAspNetCoreModule),
@@ -58,7 +60,7 @@ namespace K9Abp.Web.Core
             );
 
             // Use database for language management
-            Configuration.Modules.Zero().LanguageManagement.EnableDbLocalization();
+            // Configuration.Modules.Zero().LanguageManagement.EnableDbLocalization();
 
             Configuration.Modules.AbpAspNetCore()
                 .CreateControllersForAppServices(
@@ -109,7 +111,6 @@ namespace K9Abp.Web.Core
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(typeof(K9AbpWebCoreModule).GetAssembly());
-            Configuration.ReplaceService(typeof(AbpUserConfigurationBuilder), typeof(K9AbpUserConfigurationBuilder), DependencyLifeStyle.Transient);
         }
 
         public override void PostInitialize()

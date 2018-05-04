@@ -1,25 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using Abp.Application.Features;
 using Abp.Application.Navigation;
 using Abp.Authorization;
 using Abp.Configuration;
 using Abp.Configuration.Startup;
-using Abp.Dependency;
-using Abp.Extensions;
 using Abp.Localization;
 using Abp.Runtime.Session;
-using Abp.Timing;
-using Abp.Timing.Timezone;
 using Abp.Web.Configuration;
 using Abp.Web.Models.AbpUserConfiguration;
 using Abp.Web.Security.AntiForgery;
-using TimeZoneConverter;
 
-namespace K9Abp.Web.Core.Configuration
+namespace K9Abp.NgAlain.Configuration
 {
     /// <summary>
     /// 修改AbpUserConfigurationBuilder，为abp-alain提供配置信息
