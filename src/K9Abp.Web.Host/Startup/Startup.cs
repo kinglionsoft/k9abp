@@ -13,6 +13,7 @@ using Abp.Extensions;
 using Abp.PlugIns;
 using Castle.Core.Logging;
 using Castle.Facilities.Logging;
+using Hangfire;
 using K9Abp.Core.Configuration;
 using K9Abp.Core.Identity;
 using K9Abp.Web.Core.Authentication.JwtBearer;
@@ -69,7 +70,10 @@ namespace K9Abp.Web.Host.Startup
                         .AllowAnyMethod();
                 });
             });
-          
+
+            // hangfire
+            services.AddAbpHangfire(_appConfiguration.GetConnectionString("Default"));
+
 #if DEBUG
             // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
             services.AddSwaggerGen(options =>
@@ -121,6 +125,8 @@ namespace K9Abp.Web.Host.Startup
             app.UseJwtTokenMiddleware();
 
             app.UseAbpRequestLocalization(); // after authentication middleware
+
+            app.UserAbpHangfire();
 
 #if FEATURE_SIGNALR
             // Integrate to OWIN
