@@ -21,7 +21,6 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
-src/K9Abp.EntityFrameworkCore/Migrations/
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -251,5 +250,6 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
-src/YkAbp.Web.Host/wwwroot/i18n
-/src/YkAbp.EntityFrameworkCore/Migrations
+src/K9Abp.Web.Host/wwwroot/i18n
+src/K9Abp.EntityFrameworkCore/Migrations
+src/K9Abp.Web.Host/config/appsettings.Development.json
