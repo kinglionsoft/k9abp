@@ -126,7 +126,7 @@ namespace K9Abp.Web.Host.Startup
 
             app.UseAbpRequestLocalization(); // after authentication middleware
 
-            app.UserAbpHangfire();
+            app.UserAbpHangfire(_appConfiguration.GetSection("Hangfire"));
 
 #if FEATURE_SIGNALR
             // Integrate to OWIN

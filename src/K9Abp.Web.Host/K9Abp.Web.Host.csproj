@@ -34,6 +34,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="2.0.1" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.3" />
   </ItemGroup>
@@ -48,6 +49,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Plugins\" />
+    <Folder Include="HangfireStartup\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="lang\AbpWeb\AbpWeb-en.json">
