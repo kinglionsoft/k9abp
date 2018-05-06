@@ -63,11 +63,13 @@ namespace K9Abp.Web.Host.Startup
                 {
                     // App:CorsOrigins in appsettings.json can contain more than one address separated by comma.
                     builder
-                        .WithOrigins(_appConfiguration["App:CorsOrigins"].Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                                                         .Select(o => o.RemovePostFix("/"))
-                                                                         .ToArray())
+                        .WithOrigins(_appConfiguration["App:CorsOrigins"]
+                            .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                            .Select(o => o.RemovePostFix("/"))
+                            .ToArray())
+                        .SetPreflightMaxAge(TimeSpan.FromDays(1))
                         .AllowAnyHeader()
-                        .AllowAnyMethod();
+                        .WithMethods("OPTIONS", "GET", "POST", "PUT", "DELETE");
                 });
             });
 
@@ -126,7 +128,7 @@ namespace K9Abp.Web.Host.Startup
 
             app.UseAbpRequestLocalization(); // after authentication middleware
 
-            app.UserAbpHangfire(_appConfiguration.GetSection("Hangfire"));
+            app.UserAbpHangfire(_appConfiguration.GetSection("Hangfire")); // after authentication middleware
 
 #if FEATURE_SIGNALR
             // Integrate to OWIN

@@ -4,14 +4,12 @@ import * as clients from './clients';
 
 const _CLIENTS = [
 {% for c in Model -%}
-	clients.{{ c }},
+    clients.{{ c }},
 {% endfor -%}
 ];
 
 @NgModule({
     providers: [..._CLIENTS],
 })
+
 export class AbpServiceModule { }
-
-
-

@@ -23,6 +23,16 @@ namespace K9Abp.AngularClientGenerator
                 writer.Write(code);
             }
         }
+
+        public static void RenderFile(string templateFile, string outputFile)
+        {
+            var template = Load(templateFile);
+            var code = template.Render();
+            using (var writer = new StreamWriter(outputFile, false, Encoding.UTF8))
+            {
+                writer.Write(code);
+            }
+        }
     }
 }
 

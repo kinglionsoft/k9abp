@@ -13,17 +13,18 @@ namespace K9Abp.AngularClientGenerator
 {
     class Program
     {
-        private const string DefaultSwaggerSpecUrl = "http://localhost:21021/swagger/v1/swagger.json";
-        private const string DefaultOutputFile = @"..\..\..\..\..\..\abp-alain\src\abp\services\clients.ts";
+        private const string DefaultSwaggerSpecUrl = "http://localhost:5000/swagger/v1/swagger.json";
+        private const string DefaultOutputPath = @"..\..\..\..\..\..\abp-alain\src\app\abp\services";
+        private const string ClientFile = "clients.ts";
         private const string ClassNameSuffix = "Client";
         private const string ModuleFile = "abp.service.module.ts";
 
         static void Main(string[] args)
         {
             var swaggerSpecUrl = args.Length > 0 ? args[0] : DefaultSwaggerSpecUrl;
-            var outputFile = args.Length > 1 ? args[1] : DefaultOutputFile;
+            var outputPath = args.Length > 1 ? args[1] : DefaultOutputPath;
             Console.WriteLine($"Swagger描述文档地址为：{swaggerSpecUrl}");
-            Console.WriteLine($"客户端代理类输出地址为：{Path.GetFullPath(outputFile)}");
+            Console.WriteLine($"客户端代理类输出地址为：{Path.GetFullPath(outputPath)}");
 
             // 配置
             var document = SwaggerDocument.FromUrlAsync(swaggerSpecUrl).GetAwaiter().GetResult();
@@ -38,17 +39,22 @@ namespace K9Abp.AngularClientGenerator
             };
 
             settings.TypeScriptGeneratorSettings.DateTimeType = TypeScriptDateTimeType.Date;
-            settings.TypeScriptGeneratorSettings.GenerateCloneMethod = true;
+            settings.TypeScriptGeneratorSettings.GenerateCloneMethod = false;
+            settings.TypeScriptGeneratorSettings.GenerateConstructorInterface = false;
             settings.TypeScriptGeneratorSettings.ExtendedClasses = null;
             settings.CodeGeneratorSettings.TemplateDirectory = "Template";
 
             // 生成客户端代理类
-            GenerateFile(document, settings, outputFile);
+            GenerateFile(document, settings, Path.Combine(outputPath, ClientFile));
             Console.WriteLine("生成客户端代理类成功");
 
             // 生成Module
-            GenerateModule(document, settings, GetModuleFile(outputFile));
+            GenerateModule(document, settings, Path.Combine(outputPath, ModuleFile));
             Console.WriteLine("生成模块文件成功");
+
+            // 生成index.ts
+            GenerateIndex(Path.Combine(outputPath, "index.ts"));
+            Console.WriteLine("生成index文件成功");
         }
 
         static void GenerateFile(SwaggerDocument document, SwaggerToTypeScriptClientGeneratorSettings settings, string clientFile)
@@ -72,9 +78,9 @@ namespace K9Abp.AngularClientGenerator
             clients.RenderToFile(Path.Combine("Template", "Module.liquid"), moduleFile);
         }
 
-        static string GetModuleFile(string outputFile)
+        static void GenerateIndex(string indexFile)
         {
-            return Path.Combine(new FileInfo(outputFile).DirectoryName, ModuleFile);
+            DotLiquidExtensions.RenderFile(Path.Combine("Template", "Index.liquid"), indexFile);
         }
     }
 }

@@ -30,6 +30,7 @@ namespace K9Abp.Web.Host.Startup
                     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
                     if (hostingContext.HostingEnvironment.IsDevelopment())
                     {
+                        logging.SetMinimumLevel(LogLevel.Debug);
                         logging.AddConsole();
                     }
                 })
