@@ -13,6 +13,10 @@
     <DefineConstants>FEATURE_SIGNALR</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Plugins\K9Abp.iDesk.dll" />
+    <None Remove="Plugins\K9Abp.iDesk.pdb" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
