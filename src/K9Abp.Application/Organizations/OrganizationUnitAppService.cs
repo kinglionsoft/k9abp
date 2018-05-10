@@ -38,7 +38,7 @@ namespace K9Abp.Application.Organizations
                 join uou in _userOrganizationUnitRepository.GetAll() on ou.Id equals uou.OrganizationUnitId into g
                 select new { ou, memberCount = g.Count() };
 
-            var items = await query.ToListAsync();
+            var items = await query.OrderBy(x => x.ou.Code).ToListAsync();
 
             return new ListResultDto<OrganizationUnitDto>(
                 items.Select(item =>

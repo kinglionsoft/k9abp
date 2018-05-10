@@ -87,11 +87,7 @@ namespace K9Abp.Application.Authorization.Users
                 .WhereIf(input.Role.HasValue, u => u.Roles.Any(r => r.RoleId == input.Role.Value))
                 .WhereIf(
                     !input.Filter.IsNullOrWhiteSpace(),
-                    u =>
-                        u.Name.Contains(input.Filter) ||
-                        u.Surname.Contains(input.Filter) ||
-                        u.UserName.Contains(input.Filter) ||
-                        u.EmailAddress.Contains(input.Filter)
+                    u => u.Name.Contains(input.Filter)
                 );
 
             if (!input.Permission.IsNullOrWhiteSpace())
