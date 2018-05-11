@@ -103,11 +103,14 @@ namespace K9Abp.Web.Host.Startup
 
             // Configure Abp and Dependency Injection
             return services.AddAbp<K9AbpWebHostModule>(options =>
-            {
+            {   
                 options.IocManager.IocContainer.AddFacility<LoggingFacility>(
                     f => f.UseAbpNLog().WithConfig(Path.Combine("config", $"nlog.{_environment.EnvironmentName}.config")));
-
-                options.PlugInSources.AddFolder(Path.Combine(_environment.ContentRootPath, "Plugins"));
+                var pluginsPath = Path.Combine(_environment.ContentRootPath, "Plugins");
+                if(Directory.Exists(pluginsPath))
+                {
+                    options.PlugInSources.AddFolder(Path.Combine(_environment.ContentRootPath, "Plugins"));
+                }
             });
         }
 
