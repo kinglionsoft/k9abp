@@ -50,6 +50,7 @@ namespace K9Abp.Application.Authorization.Users
         private readonly IEnumerable<IPasswordValidator<User>> _passwordValidators;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IRepository<OrganizationUnit, long> _organizationUnitRepository;
+        private readonly IRepository<UserOrganizationUnit, long> _userOrganizationUnitRepository;
 
         public UserAppService(
             RoleManager roleManager,
@@ -63,7 +64,8 @@ namespace K9Abp.Application.Authorization.Users
             IUserPolicy userPolicy,
             IEnumerable<IPasswordValidator<User>> passwordValidators,
             IPasswordHasher<User> passwordHasher,
-            IRepository<OrganizationUnit, long> organizationUnitRepository)
+            IRepository<OrganizationUnit, long> organizationUnitRepository,
+            IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository)
         {
             _roleManager = roleManager;
             _userEmailer = userEmailer;
@@ -77,7 +79,7 @@ namespace K9Abp.Application.Authorization.Users
             _passwordValidators = passwordValidators;
             _passwordHasher = passwordHasher;
             _organizationUnitRepository = organizationUnitRepository;
-
+            _userOrganizationUnitRepository = userOrganizationUnitRepository;
             AppUrlService = NullAppUrlService.Instance;
         }
 
@@ -112,7 +114,7 @@ namespace K9Abp.Application.Authorization.Users
                 .ToListAsync();
 
             var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
-            await FillRoleNames(userListDtos);
+            await FillAddtionalData(userListDtos);
 
             return new PagedResultDto<UserListDto>(
                 userCount,
@@ -124,7 +126,7 @@ namespace K9Abp.Application.Authorization.Users
         {
             var users = await UserManager.Users.ToListAsync();
             var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
-            await FillRoleNames(userListDtos);
+            await FillAddtionalData(userListDtos);
 
             return _userListExcelExporter.ExportToFile(userListDtos);
         }
@@ -349,11 +351,22 @@ namespace K9Abp.Application.Authorization.Users
             }
         }
 
-        private async Task FillRoleNames(List<UserListDto> userListDtos)
+        private async Task FillAddtionalData(List<UserListDto> userListDtos)
         {
-            /* This method is optimized to fill role names to given list. */
+            /* This method is optimized to fill data to given list. */
+            var userIds = userListDtos.Select(x => x.Id).ToArray();
+            var departments = await (from uou in _userOrganizationUnitRepository.GetAllWithoutTracking()
+                                     join ou in _organizationUnitRepository.GetAllWithoutTracking() on uou.OrganizationUnitId equals ou.Id
+                                     where userIds.Contains(uou.Id)
+                                     select new
+                                     {
+                                         uou.UserId,
+                                         ou.Id,
+                                         ou.DisplayName
+                                     })
+                             .ToListAsync();
 
-            var userRoles = await _userRoleRepository.GetAll()
+            var userRoles = await _userRoleRepository.GetAllWithoutTracking()
                 .Where(userRole => userListDtos.Any(user => user.Id == userRole.UserId))
                 .Select(userRole => userRole).ToListAsync();
 
@@ -363,6 +376,12 @@ namespace K9Abp.Application.Authorization.Users
             {
                 var rolesOfUser = userRoles.Where(userRole => userRole.UserId == user.Id).ToList();
                 user.Roles = ObjectMapper.Map<List<UserListRoleDto>>(rolesOfUser);
+                var userDepartment = departments.FirstOrDefault(x => x.UserId == user.Id);
+                if (userDepartment != null)
+                {
+                    user.DepartmentId = userDepartment.Id;
+                    user.Department = user.Department;
+                }
             }
 
             var roleNames = new Dictionary<int, string>();

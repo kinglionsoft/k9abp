@@ -11,6 +11,7 @@ using Abp.Organizations;
 using Microsoft.EntityFrameworkCore;
 using K9Abp.Application.Organizations.Dto;
 using K9Abp.Core.Authorization;
+using Abp.UI;
 
 namespace K9Abp.Application.Organizations
 {
@@ -34,8 +35,8 @@ namespace K9Abp.Application.Organizations
         public async Task<ListResultDto<OrganizationUnitDto>> GetOrganizationUnits()
         {
             var query =
-                from ou in _organizationUnitRepository.GetAll()
-                join uou in _userOrganizationUnitRepository.GetAll() on ou.Id equals uou.OrganizationUnitId into g
+                from ou in _organizationUnitRepository.GetAllWithoutTracking()
+                join uou in _userOrganizationUnitRepository.GetAllWithoutTracking() on ou.Id equals uou.OrganizationUnitId into g
                 select new { ou, memberCount = g.Count() };
 
             var items = await query.OrderBy(x => x.ou.Code).ToListAsync();
@@ -51,17 +52,16 @@ namespace K9Abp.Application.Organizations
 
         public async Task<PagedResultDto<OrganizationUnitUserListDto>> GetOrganizationUnitUsers(GetOrganizationUnitUsersInput input)
         {
-            var query = from uou in _userOrganizationUnitRepository.GetAll()
-                        join ou in _organizationUnitRepository.GetAll() on uou.OrganizationUnitId equals ou.Id
+            var query = from uou in _userOrganizationUnitRepository.GetAllWithoutTracking()
+                        join ou in _organizationUnitRepository.GetAllWithoutTracking() on uou.OrganizationUnitId equals ou.Id
                         join user in UserManager.Users on uou.UserId equals user.Id
                         where uou.OrganizationUnitId == input.Id
                         select new { uou, user };
 
-            var totalCount = await query.CountAsync();
-            var items = await query.OrderBy(input.Sorting).PageBy(input).ToListAsync();
+            var items = await query.OrderBy(input.Sorting).ToListAsync();
 
             return new PagedResultDto<OrganizationUnitUserListDto>(
-                totalCount,
+                items.Count,
                 items.Select(item =>
                 {
                     var dto = ObjectMapper.Map<OrganizationUnitUserListDto>(item.user);
@@ -119,6 +119,13 @@ namespace K9Abp.Application.Organizations
         [AbpAuthorize(PermissionNames.Administration_OrganizationUnits_ManageMembers)]
         public async Task AddUsersToOrganizationUnit(UsersToOrganizationUnitInput input)
         {
+            // check if user is belong to an OU
+            if (await _userOrganizationUnitRepository.GetAllWithoutTracking()
+                .AnyAsync(x => input.UserIds.Contains(x.UserId)))
+            {
+                throw new UserFriendlyException("添加成员失败", "每个成员只能加入一个组织");
+            }
+
             foreach (var userId in input.UserIds)
             {
                 await UserManager.AddToOrganizationUnitAsync(userId, input.OrganizationUnitId);
