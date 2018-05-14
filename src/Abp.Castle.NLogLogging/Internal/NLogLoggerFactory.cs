@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using Castle.Core.Logging;
+using NLog;
 using NLog.Config;
+using ILogger = Castle.Core.Logging.ILogger;
 
 namespace Abp.Castle.NLogLogging.Internal
 {
@@ -16,11 +18,11 @@ namespace Abp.Castle.NLogLogging.Internal
 
         public NLogLoggerFactory(string configFile)
         {
-            if (!System.IO.File.Exists(configFile))
+            if (!File.Exists(configFile))
             {
                 throw new FileNotFoundException(configFile);
             }
-            NLog.LogManager.Configuration = new XmlLoggingConfiguration(configFile);
+            LogManager.Configuration = new XmlLoggingConfiguration(configFile);
         }
 
         public override ILogger Create(string name)
@@ -29,9 +31,7 @@ namespace Abp.Castle.NLogLogging.Internal
             {
                 throw new ArgumentNullException(nameof(name));
             }
-           return  new CastleNLogLogger(NLog.LogManager.GetLogger(name));
-            //  var logger=   NLog.LogManager.CreateNullLogger().Factory.GetLogger<CastleNLogLogger>(name);
-            //  return (ILogger)logger;
+           return  new CastleNLogLogger(LogManager.GetLogger(name));
         }
 
         public override ILogger Create(string name, LoggerLevel level)

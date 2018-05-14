@@ -17,7 +17,7 @@ namespace K9Abp.Web.Host.Startup
         {
             services.AddHangfire(config =>
             {
-                config.UseNLogLogProvider();
+               // config.UseNLogLogProvider(); // DO NOT enable this configuration.
             });
             GlobalConfiguration.Configuration.UseStorage(
                 new MySqlStorage(
