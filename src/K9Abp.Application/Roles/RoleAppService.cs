@@ -87,7 +87,7 @@ namespace K9Abp.Application.Roles
             var permissions = PermissionManager.GetAllPermissions();
 
             return Task.FromResult(new ListResultDto<PermissionDto>(
-                ObjectMapper.Map<List<PermissionDto>>(permissions)
+                ObjectMapper.Map<List<PermissionDto>>(permissions.OrderBy(x => x.Name))
             ));
         }
 
