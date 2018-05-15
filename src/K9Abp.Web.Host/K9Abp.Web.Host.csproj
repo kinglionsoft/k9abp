@@ -28,7 +28,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Hangfire.MySql.Core\Hangfire.MySql\Hangfire.MySql.Core.csproj" />
+    <ProjectReference Include="..\Hangfire.MySql.Core\Hangfire.MySql.Core.csproj" />
     <ProjectReference Include="..\Abp.Castle.NLogLogging\Abp.Castle.NLogLogging.csproj" />
     <ProjectReference Include="..\K9Abp.Web.Core\K9Abp.Web.Core.csproj" />
   </ItemGroup>

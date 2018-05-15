@@ -67,15 +67,15 @@ namespace K9Abp.Application.Authorization.Roles
             };
         }
 
-        public async Task CreateOrUpdateRole(CreateOrUpdateRoleInput input)
+        public async Task<int> CreateOrUpdateRole(CreateOrUpdateRoleInput input)
         {
             if (input.Role.Id.HasValue)
             {
-                await UpdateRoleAsync(input);
+                return await UpdateRoleAsync(input);
             }
             else
             {
-                await CreateRoleAsync(input);
+                return await CreateRoleAsync(input);
             }
         }
 
@@ -94,7 +94,7 @@ namespace K9Abp.Application.Authorization.Roles
         }
 
         [AbpAuthorize(PermissionNames.Administration_Roles_Edit)]
-        protected virtual async Task UpdateRoleAsync(CreateOrUpdateRoleInput input)
+        protected virtual async Task<int> UpdateRoleAsync(CreateOrUpdateRoleInput input)
         {
             Debug.Assert(input.Role.Id != null, "input.Role.Id should be set.");
 
@@ -103,15 +103,17 @@ namespace K9Abp.Application.Authorization.Roles
             role.IsDefault = input.Role.IsDefault;
 
             await UpdateGrantedPermissionsAsync(role, input.GrantedPermissionNames);
+            return role.Id;
         }
 
         [AbpAuthorize(PermissionNames.Administration_Roles_Create)]
-        protected virtual async Task CreateRoleAsync(CreateOrUpdateRoleInput input)
+        protected virtual async Task<int> CreateRoleAsync(CreateOrUpdateRoleInput input)
         {
             var role = new Role(AbpSession.TenantId, input.Role.DisplayName) { IsDefault = input.Role.IsDefault };
             CheckErrors(await _roleManager.CreateAsync(role));
             await CurrentUnitOfWork.SaveChangesAsync(); //It's done to get Id of the role.
             await UpdateGrantedPermissionsAsync(role, input.GrantedPermissionNames);
+            return role.Id;
         }
 
         private async Task UpdateGrantedPermissionsAsync(Role role, List<string> grantedPermissionNames)

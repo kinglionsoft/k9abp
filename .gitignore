@@ -254,3 +254,4 @@ src/K9Abp.Web.Host/wwwroot/i18n
 src/K9Abp.EntityFrameworkCore/Migrations
 src/K9Abp.Web.Host/config/appsettings.Development.json
 src/K9Abp.Web.Host/Plugins
+Hangfire.MySql.Core

@@ -14,7 +14,7 @@ namespace K9Abp.Application.Authorization.Roles
 
         Task<GetRoleForEditOutput> GetRoleForEdit(NullableIdDto input);
 
-        Task CreateOrUpdateRole(CreateOrUpdateRoleInput input);
+        Task<int> CreateOrUpdateRole(CreateOrUpdateRoleInput input);
 
         Task DeleteRole(EntityDto input);
     }
