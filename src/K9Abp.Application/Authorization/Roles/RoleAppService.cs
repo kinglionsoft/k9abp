@@ -101,6 +101,7 @@ namespace K9Abp.Application.Authorization.Roles
             var role = await _roleManager.GetRoleByIdAsync(input.Role.Id.Value);
             role.DisplayName = input.Role.DisplayName;
             role.IsDefault = input.Role.IsDefault;
+            role.Name = input.Role.Name;
 
             await UpdateGrantedPermissionsAsync(role, input.GrantedPermissionNames);
             return role.Id;
@@ -109,7 +110,7 @@ namespace K9Abp.Application.Authorization.Roles
         [AbpAuthorize(PermissionNames.Administration_Roles_Create)]
         protected virtual async Task<int> CreateRoleAsync(CreateOrUpdateRoleInput input)
         {
-            var role = new Role(AbpSession.TenantId, input.Role.DisplayName) { IsDefault = input.Role.IsDefault };
+            var role = new Role(AbpSession.TenantId, input.Role.DisplayName) { IsDefault = input.Role.IsDefault, Name = input.Role.Name };
             CheckErrors(await _roleManager.CreateAsync(role));
             await CurrentUnitOfWork.SaveChangesAsync(); //It's done to get Id of the role.
             await UpdateGrantedPermissionsAsync(role, input.GrantedPermissionNames);
