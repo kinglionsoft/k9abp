@@ -20,10 +20,12 @@ namespace K9Abp.Application.Authorization.Users
 
         Task UpdateUserPermissions(UpdateUserPermissionsInput input);
 
-        Task CreateOrUpdateUser(CreateOrUpdateUserInput input);
+        Task<long> CreateOrUpdateUser(CreateOrUpdateUserInput input);
 
         Task DeleteUser(EntityDto<long> input);
 
         Task UnlockUser(EntityDto<long> input);
+
+        Task Active(EntityDto<long> input);
     }
 }

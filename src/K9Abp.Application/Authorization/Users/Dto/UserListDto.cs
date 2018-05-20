@@ -29,9 +29,5 @@ namespace K9Abp.Application.Authorization.Users.Dto
         public bool IsActive { get; set; }
 
         public DateTime CreationTime { get; set; }
-
-        public long? DepartmentId { get; set; }
-
-        public string Department { get; set; }
     }
 }

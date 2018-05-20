@@ -10,10 +10,10 @@ namespace K9Abp.Application.Authorization.Users.Dto
 
         public UserEditDto User { get; set; }
 
-        public UserRoleDto[] Roles { get; set; }
+        public IList<string> Roles { get; set; }
 
-        public List<OrganizationUnitDto> AllOrganizationUnits { get; set; }
+        // public List<OrganizationUnitDto> AllOrganizationUnits { get; set; }
 
-        public List<string> MemberedOrganizationUnits { get; set; }
+        public IList<long> MemberedOrganizationUnits { get; set; }
     }
 }

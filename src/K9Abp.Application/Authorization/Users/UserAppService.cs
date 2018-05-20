@@ -135,24 +135,7 @@ namespace K9Abp.Application.Authorization.Users
         public async Task<GetUserForEditOutput> GetUserForEdit(NullableIdDto<long> input)
         {
             //Getting all available roles
-            var userRoleDtos = await _roleManager.Roles
-                .OrderBy(r => r.DisplayName)
-                .Select(r => new UserRoleDto
-                {
-                    RoleId = r.Id,
-                    RoleName = r.Name,
-                    RoleDisplayName = r.DisplayName
-                })
-                .ToArrayAsync();
-
-            var allOrganizationUnits = await _organizationUnitRepository.GetAllListAsync();
-
-            var output = new GetUserForEditOutput
-            {
-                Roles = userRoleDtos,
-                AllOrganizationUnits = ObjectMapper.Map<List<OrganizationUnitDto>>(allOrganizationUnits),
-                MemberedOrganizationUnits = new List<string>()
-            };
+            var output = new GetUserForEditOutput();
 
             if (!input.Id.HasValue)
             {
@@ -165,14 +148,8 @@ namespace K9Abp.Application.Authorization.Users
                     IsLockoutEnabled = await SettingManager.GetSettingValueAsync<bool>(AbpZeroSettingNames.UserManagement.UserLockOut.IsEnabled)
                 };
 
-                foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
-                {
-                    var defaultUserRole = userRoleDtos.FirstOrDefault(ur => ur.RoleName == defaultRole.Name);
-                    if (defaultUserRole != null)
-                    {
-                        defaultUserRole.IsAssigned = true;
-                    }
-                }
+                output.MemberedOrganizationUnits = new List<long>();
+                output.Roles = new List<string>();
             }
             else
             {
@@ -181,14 +158,10 @@ namespace K9Abp.Application.Authorization.Users
 
                 output.User = ObjectMapper.Map<UserEditDto>(user);
                 output.ProfilePictureId = user.ProfilePictureId;
-
-                foreach (var userRoleDto in userRoleDtos)
-                {
-                    userRoleDto.IsAssigned = await UserManager.IsInRoleAsync(user, userRoleDto.RoleName);
-                }
+                output.Roles = await UserManager.GetRolesAsync(user);
 
                 var organizationUnits = await UserManager.GetOrganizationUnitsAsync(user);
-                output.MemberedOrganizationUnits = organizationUnits.Select(ou => ou.Code).ToList();
+                output.MemberedOrganizationUnits = organizationUnits.Select(ou => ou.Id).ToList();
             }
 
             return output;
@@ -223,15 +196,15 @@ namespace K9Abp.Application.Authorization.Users
             await UserManager.SetGrantedPermissionsAsync(user, grantedPermissions);
         }
 
-        public async Task CreateOrUpdateUser(CreateOrUpdateUserInput input)
+        public async Task<long> CreateOrUpdateUser(CreateOrUpdateUserInput input)
         {
             if (input.User.Id.HasValue)
             {
-                await UpdateUserAsync(input);
+                return await UpdateUserAsync(input);
             }
             else
             {
-                await CreateUserAsync(input);
+                return await CreateUserAsync(input);
             }
         }
 
@@ -254,7 +227,7 @@ namespace K9Abp.Application.Authorization.Users
         }
 
         [AbpAuthorize(PermissionNames.Administration_Users_Edit)]
-        protected virtual async Task UpdateUserAsync(CreateOrUpdateUserInput input)
+        protected virtual async Task<long> UpdateUserAsync(CreateOrUpdateUserInput input)
         {
             Debug.Assert(input.User.Id != null, "input.User.Id should be set.");
 
@@ -291,10 +264,11 @@ namespace K9Abp.Application.Authorization.Users
                     input.User.Password
                 );
             }
+            return input.User.Id.Value;
         }
 
         [AbpAuthorize(PermissionNames.Administration_Users_Create)]
-        protected virtual async Task CreateUserAsync(CreateOrUpdateUserInput input)
+        protected virtual async Task<long> CreateUserAsync(CreateOrUpdateUserInput input)
         {
             if (AbpSession.TenantId.HasValue)
             {
@@ -349,13 +323,14 @@ namespace K9Abp.Application.Authorization.Users
                     input.User.Password
                 );
             }
+            return user.Id;
         }
 
         private async Task FillAddtionalData(List<UserListDto> userListDtos)
         {
             /* This method is optimized to fill data to given list. */
             var userIds = userListDtos.Select(x => x.Id).ToArray();
-            var departments = await (from uou in _userOrganizationUnitRepository.GetAllWithoutTracking()
+            /*var departments = await (from uou in _userOrganizationUnitRepository.GetAllWithoutTracking()
                                      join ou in _organizationUnitRepository.GetAllWithoutTracking() on uou.OrganizationUnitId equals ou.Id
                                      where userIds.Contains(uou.Id)
                                      select new
@@ -364,8 +339,7 @@ namespace K9Abp.Application.Authorization.Users
                                          ou.Id,
                                          ou.DisplayName
                                      })
-                             .ToListAsync();
-
+                             .ToListAsync();//*/
             var userRoles = await _userRoleRepository.GetAllWithoutTracking()
                 .Where(userRole => userListDtos.Any(user => user.Id == userRole.UserId))
                 .Select(userRole => userRole).ToListAsync();
@@ -376,12 +350,13 @@ namespace K9Abp.Application.Authorization.Users
             {
                 var rolesOfUser = userRoles.Where(userRole => userRole.UserId == user.Id).ToList();
                 user.Roles = ObjectMapper.Map<List<UserListRoleDto>>(rolesOfUser);
-                var userDepartment = departments.FirstOrDefault(x => x.UserId == user.Id);
+
+                /*var userDepartment = departments.FirstOrDefault(x => x.UserId == user.Id);
                 if (userDepartment != null)
                 {
                     user.DepartmentId = userDepartment.Id;
                     user.Department = user.Department;
-                }
+                }//*/
             }
 
             var roleNames = new Dictionary<int, string>();
@@ -399,6 +374,14 @@ namespace K9Abp.Application.Authorization.Users
 
                 userListDto.Roles = userListDto.Roles.OrderBy(r => r.RoleName).ToList();
             }
+        }
+
+        public async Task Active(EntityDto<long> input)
+        {
+            var user = await UserManager.GetUserByIdAsync(input.Id);
+            if (user.IsActive) return;
+            user.IsActive = true;
+            await CurrentUnitOfWork.SaveChangesAsync();
         }
     }
 }
