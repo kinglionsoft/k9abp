@@ -54,6 +54,11 @@ namespace K9Abp.Core.Web
         {
             return Directory.GetFiles(directory).Any(filePath => string.Equals(Path.GetFileName(filePath), fileName));
         }
+
+        public static string FindPluginsFolder()
+        {
+            return Path.Combine(CalculateContentRootFolder(), "Plugins");
+        }
     }
 }
 

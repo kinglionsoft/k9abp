@@ -1,16 +1,19 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Resources;
+using Abp.Dependency;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.IdentityServer4;
+using Abp.PlugIns;
 using Abp.Zero.EntityFrameworkCore;
+using K9Abp.Core;
 using Microsoft.EntityFrameworkCore;
 using K9Abp.Core.Authorization.Roles;
 using K9Abp.Core.Authorization.Users;
 using K9Abp.Core.Chat;
 using K9Abp.Core.Editions;
-using K9Abp.Core.EntityDemo;
 using K9Abp.Core.Friendships;
 using K9Abp.Core.MultiTenancy;
 using K9Abp.Core.MultiTenancy.Accounting;
@@ -18,7 +21,6 @@ using K9Abp.Core.MultiTenancy.Payments;
 using K9Abp.Core.Storage;
 using K9Abp.Core.Web;
 using K9Abp.EntityFrameworkCore.Repositories;
-using K9Abp.iDeskCore.Work;
 
 namespace K9Abp.EntityFrameworkCore
 {
@@ -45,16 +47,6 @@ namespace K9Abp.EntityFrameworkCore
         public virtual DbSet<PersistedGrantEntity> PersistedGrants { get; set; }
 
         // TODO: Define an IDbSet for each entity of the application 
-
-        #region iDesk
-
-        public virtual DbSet<DeskworkCustomer> DeskworkCustomers { get; set; }
-        public virtual DbSet<DeskworkFollower> DeskworkFollowers { get; set; }
-        public virtual DbSet<DeskworkStep> DeskworkSteps { get; set; }
-        public virtual DbSet<DeskworkTag> DeskworkTags { get; set; }
-        public virtual DbSet<Deskwork> Deskworks { get; set; }
-
-        #endregion
 
         public K9AbpDbContext(DbContextOptions<K9AbpDbContext> options)
             : base(options)
@@ -100,11 +92,9 @@ namespace K9Abp.EntityFrameworkCore
 
             modelBuilder.ConfigurePersistedGrantEntity();
 
-            // ApplyEntitiesFromPlugins(modelBuilder);
+            ApplyEntitiesFromPlugins(modelBuilder);
 
             // TODO: configure the model here
-
-            ApplyDeskConfiguration(modelBuilder);
 
             // Naming convention
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
@@ -114,36 +104,43 @@ namespace K9Abp.EntityFrameworkCore
             }
         }
 
-        private void ApplyDeskConfiguration(ModelBuilder builder)
-        {
-            builder.Entity<DeskworkCustomer>(b =>
-            {
-                b.HasIndex(x => x.Phone).IsUnique();
-                b.HasIndex(x => x.Name);
-            });
 
-            builder.Entity<DeskworkFollower>(b =>
-            {
-                b.HasIndex(x => x.WorkId);
-                b.HasIndex(x => x.FollowerId);
-            });
-
-            builder.Entity<DeskworkStep>(b => { b.HasIndex(x => x.WorkId); });
-
-            builder.Entity<Deskwork>(b => { b.HasIndex(x => x.CustomerId); });
-        }
-
-
-        // 见：http://10.0.200.18/abp/ykabp/issues/1
+        /// <summary>
+        /// Configure Entities in Plugin Modules
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected virtual void ApplyEntitiesFromPlugins(ModelBuilder modelBuilder)
         {
-            var pluginsRoot = Path.Combine(WebContentDirectoryFinder.CalculateContentRootFolder(), "Plugins");
-            if(!Directory.Exists(pluginsRoot)) return;
-            
-            // get all Assemblies
-            var dllList = Directory.GetFiles(pluginsRoot, "*.dll", SearchOption.AllDirectories);
-            var types = dllList.Select(Assembly.LoadFile)
-                .SelectMany(x => x.DefinedTypes.Select(t => t.AsType()));
+            IAbpPlugInManager abpPlugInManager;
+            if (IocManager.Instance.IsRegistered<IAbpPlugInManager>())
+            {
+                abpPlugInManager = IocManager.Instance.Resolve<IAbpPlugInManager>();
+            }
+            else // run by `dotnet ef`
+            {
+                var pluginRoot = WebContentDirectoryFinder.FindPluginsFolder();
+                if (!Directory.Exists(pluginRoot))
+                {
+                    return;
+                }
+                abpPlugInManager = new AbpPlugInManager();
+                abpPlugInManager.PlugInSources.AddFolder(pluginRoot);
+            }
+            var configurationTypes = abpPlugInManager.PlugInSources.GetAllAssemblies()
+                .SelectMany(x => x.DefinedTypes
+                                .Where(p => !p.IsAbstract && p.IsClass && p.GetInterface(nameof(IEntityConfiguration)) != null)
+                                .Select(t => t.AsType()));
+            foreach (var configuration in configurationTypes)
+            {
+                try
+                {
+                    (Activator.CreateInstance(configuration) as IEntityConfiguration).Configure(modelBuilder);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Can't configure entities of {configuration.FullName}", ex);
+                }
+            }
         }
     }
 }

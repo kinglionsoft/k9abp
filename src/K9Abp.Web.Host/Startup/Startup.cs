@@ -16,6 +16,7 @@ using Castle.Facilities.Logging;
 using Hangfire;
 using K9Abp.Core.Configuration;
 using K9Abp.Core.Identity;
+using K9Abp.Core.Web;
 using K9Abp.Web.Core.Authentication.JwtBearer;
 #if DEBUG
 using Swashbuckle.AspNetCore.Swagger;
@@ -106,10 +107,10 @@ namespace K9Abp.Web.Host.Startup
             {   
                 options.IocManager.IocContainer.AddFacility<LoggingFacility>(
                     f => f.UseAbpNLog().WithConfig(Path.Combine("config", $"nlog.{_environment.EnvironmentName}.config")));
-                var pluginsPath = Path.Combine(_environment.ContentRootPath, "Plugins");
-                if(Directory.Exists(pluginsPath))
+                var pluginsPath = WebContentDirectoryFinder.FindPluginsFolder();
+                if (Directory.Exists(pluginsPath))
                 {
-                    options.PlugInSources.AddFolder(Path.Combine(_environment.ContentRootPath, "Plugins"));
+                    options.PlugInSources.AddFolder(pluginsPath);
                 }
             });
         }

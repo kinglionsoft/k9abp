@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.IO;
+using Abp.PlugIns;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using K9Abp.Core;
@@ -16,9 +18,8 @@ namespace K9Abp.EntityFrameworkCore
             var configuration = AppConfigurations.Get(WebContentDirectoryFinder.FindConfigurationFolder());
 
             K9AbpDbContextConfigurer.Configure(builder, configuration.GetConnectionString(K9AbpConsts.ConnectionStringName));
-
+            
             return new K9AbpDbContext(builder.Options);
         }
     }
 }
-

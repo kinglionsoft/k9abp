@@ -20,6 +20,7 @@ namespace K9Abp.EntityFrameworkCore
 
         public bool SkipDbSeed { get; set; }
 
+
         public override void PreInitialize()
         {
             if (!SkipDbContextRegistration)
