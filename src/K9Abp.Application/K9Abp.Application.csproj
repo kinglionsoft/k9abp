@@ -17,7 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
-    <PackageReference Include="Abp.Web.Common" Version="3.5.0" />
+    <PackageReference Include="Abp.Web.Common" Version="3.7.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\K9Abp.Core\K9Abp.Core.csproj" />

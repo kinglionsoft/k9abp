@@ -5,6 +5,7 @@ using Abp.Application.Navigation;
 using Abp.Authorization;
 using Abp.Configuration;
 using Abp.Configuration.Startup;
+using Abp.Dependency;
 using Abp.Localization;
 using Abp.Runtime.Session;
 using Abp.Web.Configuration;
@@ -21,7 +22,7 @@ namespace K9Abp.NgAlain.Configuration
     /// </remarks>
     public class K9AbpUserConfigurationBuilder : AbpUserConfigurationBuilder
     {
-        public K9AbpUserConfigurationBuilder(IMultiTenancyConfig multiTenancyConfig, ILanguageManager languageManager, ILocalizationManager localizationManager, IFeatureManager featureManager, IFeatureChecker featureChecker, IPermissionManager permissionManager, IUserNavigationManager userNavigationManager, ISettingDefinitionManager settingDefinitionManager, ISettingManager settingManager, IAbpAntiForgeryConfiguration abpAntiForgeryConfiguration, IAbpSession abpSession, IPermissionChecker permissionChecker) : base(multiTenancyConfig, languageManager, localizationManager, featureManager, featureChecker, permissionManager, userNavigationManager, settingDefinitionManager, settingManager, abpAntiForgeryConfiguration, abpSession, permissionChecker)
+        public K9AbpUserConfigurationBuilder(IMultiTenancyConfig multiTenancyConfig, ILanguageManager languageManager, ILocalizationManager localizationManager, IFeatureManager featureManager, IFeatureChecker featureChecker, IPermissionManager permissionManager, IUserNavigationManager userNavigationManager, ISettingDefinitionManager settingDefinitionManager, ISettingManager settingManager, IAbpAntiForgeryConfiguration abpAntiForgeryConfiguration, IAbpSession abpSession, IPermissionChecker permissionChecker, IIocResolver iocResolver, IAbpStartupConfiguration startupConfiguration) : base(multiTenancyConfig, languageManager, localizationManager, featureManager, featureChecker, permissionManager, userNavigationManager, settingDefinitionManager, settingManager, abpAntiForgeryConfiguration, abpSession, permissionChecker, iocResolver, startupConfiguration)
         {
         }
 
@@ -65,5 +66,7 @@ namespace K9Abp.NgAlain.Configuration
            //*/
             return config;
         }
+
+        
     }
 }

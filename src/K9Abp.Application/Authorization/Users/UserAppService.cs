@@ -376,6 +376,7 @@ namespace K9Abp.Application.Authorization.Users
             }
         }
 
+        [AbpAuthorize(PermissionNames.Administration_Users_Edit)]
         public async Task Active(EntityDto<long> input)
         {
             var user = await UserManager.GetUserByIdAsync(input.Id);

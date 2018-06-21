@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <AssemblyName>K9Abp.Web.Host</AssemblyName>
@@ -28,28 +28,25 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hangfire.MySql.Core\Hangfire.MySql.Core.csproj" />
+    <ProjectReference Include="..\..\..\..\..\Github\Hangfire.MySql.Core\Hangfire.MySql\Hangfire.MySql.Core.csproj" />
     <ProjectReference Include="..\Abp.Castle.NLogLogging\Abp.Castle.NLogLogging.csproj" />
     <ProjectReference Include="..\K9Abp.Web.Core\K9Abp.Web.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Castle.LoggingFacility.MsLogging" Version="3.1.0" />
-    <!--<PackageReference Include="Hangfire.MySql.Core" Version="2.1.6-preview" />-->
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="2.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
     <PackageReference Include="Microsoft.Owin.Cors" Version="3.1.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
