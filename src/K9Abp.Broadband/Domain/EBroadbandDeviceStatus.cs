@@ -1,6 +1,6 @@
 ﻿namespace K9Abp.Broadband
 {
-    public enum EBroadbrandDeviceStatus
+    public enum EBroadbandDeviceStatus
     {
         正常 = 0,
         故障 = 1,

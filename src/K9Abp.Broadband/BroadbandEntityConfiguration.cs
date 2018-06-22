@@ -8,11 +8,11 @@ namespace K9Abp.Broadband
     {
         public void Configure(ModelBuilder builder)
         {
-            builder.Entity<BroadbrandUser>(b =>
+            builder.Entity<BroadbandUser>(b =>
             {
                 b.Property(e => e.Extra).HasColumnType("json");
             });
-            builder.Entity<BroadbrandUser>()
+            builder.Entity<BroadbandUser>()
                 .HasIndex(x => x.Phone).HasName("idx_phone");
         }
     }

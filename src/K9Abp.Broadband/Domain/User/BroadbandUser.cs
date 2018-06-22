@@ -7,7 +7,7 @@ using Abp.Organizations;
 
 namespace K9Abp.Broadband.User
 {
-    public class BroadbrandUser: Entity, IMustHaveOrganizationUnit
+    public class BroadbandUser: Entity, IMustHaveOrganizationUnit
     {
         /// <summary>
         /// 手机号
@@ -89,7 +89,7 @@ namespace K9Abp.Broadband.User
         /// 设备情况
         /// </summary>
         [Required]
-        public EBroadbrandDeviceStatus DeviceStatus { get; set; }
+        public EBroadbandDeviceStatus DeviceStatus { get; set; }
 
         /// <summary>
         /// 附加信息
