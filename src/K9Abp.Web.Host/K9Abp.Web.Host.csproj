@@ -28,12 +28,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Hangfire.MySql.Core\Hangfire.MySql\Hangfire.MySql.Core.csproj" />
     <ProjectReference Include="..\Abp.Castle.NLogLogging\Abp.Castle.NLogLogging.csproj" />
     <ProjectReference Include="..\K9Abp.Web.Core\K9Abp.Web.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Castle.LoggingFacility.MsLogging" Version="3.1.0" />
+    <PackageReference Include="Hangfire.MySql.Core" Version="2.1.6-preview" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.1.1" />
@@ -51,7 +51,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Plugins\" />
-    <Folder Include="HangfireStartup\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="lang\AbpWeb\AbpWeb-en.json">

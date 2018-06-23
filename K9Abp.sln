@@ -49,8 +49,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.NgAlain", "src\K9Abp.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.Broadband", "src\K9Abp.Broadband\K9Abp.Broadband.csproj", "{45D34376-72A2-48E4-B875-7FF00B099B4C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hangfire.MySql.Core", "..\Hangfire.MySql.Core\Hangfire.MySql\Hangfire.MySql.Core.csproj", "{B40EC743-F964-4E7E-879F-C7BE42115166}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,10 +115,6 @@ Global
 		{45D34376-72A2-48E4-B875-7FF00B099B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D34376-72A2-48E4-B875-7FF00B099B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45D34376-72A2-48E4-B875-7FF00B099B4C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B40EC743-F964-4E7E-879F-C7BE42115166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B40EC743-F964-4E7E-879F-C7BE42115166}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B40EC743-F964-4E7E-879F-C7BE42115166}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B40EC743-F964-4E7E-879F-C7BE42115166}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,7 +141,6 @@ Global
 		{286452BD-FA37-4911-B011-5579D6D3AEA6} = {1C5D3462-14ED-4126-9D21-1142BEC08DD7}
 		{A258266A-4218-4D4A-AB17-46955FF21A60} = {81197F26-BE78-403B-9D8A-3C31EA8D96DD}
 		{45D34376-72A2-48E4-B875-7FF00B099B4C} = {1C5D3462-14ED-4126-9D21-1142BEC08DD7}
-		{B40EC743-F964-4E7E-879F-C7BE42115166} = {146542FD-DA5B-49C3-81E6-15D41DCA251E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B342F8C7-B274-4220-B2A7-05B0F4D8C674}
