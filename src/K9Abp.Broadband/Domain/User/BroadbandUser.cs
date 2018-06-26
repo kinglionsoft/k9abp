@@ -7,7 +7,7 @@ using Abp.Organizations;
 
 namespace K9Abp.Broadband.User
 {
-    public class BroadbandUser: Entity, IMustHaveOrganizationUnit
+    public class BroadbandUser: Entity, IMustHaveOrganizationUnit, IMustHaveTenant
     {
         /// <summary>
         /// 手机号
@@ -74,10 +74,40 @@ namespace K9Abp.Broadband.User
         public int ExtraVoice { get; set; }
 
         /// <summary>
-        /// 拍照档位
+        /// 拍照套餐
         /// </summary>
         [StringLength(50)]
-        public string Spot { get; set; }
+        public string SpotProduct { get; set; }
+
+        /// <summary>
+        /// 拍照带宽
+        /// </summary>
+        [Required]
+        public int SpotBandwidth { get; set; }
+
+        /// <summary>
+        /// 保有优先级
+        /// </summary>
+        [Required]
+        public int RetentionPriority { get; set; }
+
+        /// <summary>
+        /// 升级优先级
+        /// </summary>
+        [Required]
+        public int UpgradePriority { get; set; }
+
+        /// <summary>
+        /// 保有情况
+        /// </summary>
+        [Required]
+        public ERetentionStatus Retention { get; set; }
+
+        /// <summary>
+        /// 升级情况
+        /// </summary>
+        [Required]
+        public EUpgradeStatus Upgrade { get; set; }
 
         /// <summary>
         /// 状态
@@ -95,5 +125,11 @@ namespace K9Abp.Broadband.User
         /// 附加信息
         /// </summary>
         public JsonObject<Dictionary<string, string>> Extra { get; set; }
+        
+        /// <summary>
+        /// 租房Id
+        /// </summary>
+        [Required]
+        public int TenantId { get; set; }
     }
 }
