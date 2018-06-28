@@ -17,36 +17,36 @@ namespace Abp.Domain.Repositories
             return repository.GetAll().AsNoTracking();
         }
 
-        public static IQueryable<TEntity> GetAllWithoutTracking<TEntity>(this IRepository<TEntity, int> repository) where TEntity : class, IEntity<int>
+        public static IQueryable<TEntity> GetAllWithoutTracking<TEntity>(this IRepository<TEntity> repository) where TEntity : class, IEntity<int>
         {
             return repository.GetAll().AsNoTracking();
         }
 
         public static Task<TEntity> FirstOrDefaultWithoutTrackingAsync<TEntity, TPrimaryKey>(this IRepository<TEntity, TPrimaryKey> repository, 
             [NotNull] Expression<Func<TEntity, bool>> predicate, 
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
             where TEntity : class, IEntity<TPrimaryKey>
         {
             return repository.GetAll().AsNoTracking().FirstOrDefaultAsync(predicate, cancellationToken);
         }
 
-        public static Task<TEntity> FirstOrDefaultWithoutTrackingAsync<TEntity>(this IRepository<TEntity, int> repository,
+        public static Task<TEntity> FirstOrDefaultWithoutTrackingAsync<TEntity>(this IRepository<TEntity> repository,
             [NotNull] Expression<Func<TEntity, bool>> predicate,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
             where TEntity : class, IEntity<int>
         {
             return repository.GetAll().AsNoTracking().FirstOrDefaultAsync(predicate, cancellationToken);
         }
 
         public static Task<TEntity> FirstOrDefaultWithoutTrackingAsync<TEntity, TPrimaryKey>(this IRepository<TEntity, TPrimaryKey> repository, 
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
             where TEntity : class, IEntity<TPrimaryKey>
         {
             return repository.GetAll().AsNoTracking().FirstOrDefaultAsync(cancellationToken);
         }
 
-        public static Task<TEntity> FirstOrDefaultWithoutTrackingAsync<TEntity>(this IRepository<TEntity, int> repository,
-            CancellationToken cancellationToken = default(CancellationToken))
+        public static Task<TEntity> FirstOrDefaultWithoutTrackingAsync<TEntity>(this IRepository<TEntity> repository,
+            CancellationToken cancellationToken = default)
             where TEntity : class, IEntity<int>
         {
             return repository.GetAll().AsNoTracking().FirstOrDefaultAsync(cancellationToken);

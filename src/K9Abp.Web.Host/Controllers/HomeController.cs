@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Abp;
 using Abp.Extensions;
@@ -6,6 +8,9 @@ using Abp.Notifications;
 using Abp.Timing;
 using Microsoft.Extensions.Logging;
 using K9Abp.Web.Core.Controllers;
+using System.Diagnostics;
+using Abp.Auditing;
+using Abp.Domain.Repositories;
 
 namespace K9Abp.Web.Host.Controllers
 {
@@ -49,10 +54,36 @@ namespace K9Abp.Web.Host.Controllers
             return Content("Sent notification: " + message);
         }
 
-        public string Test()
+        [DisableAuditing]
+        public async Task<long> Test(int c, [FromServices]IBulkRepository<Demo> repository)
         {
-            Logger.Debug("ok");
-            return "ok";
+            var data = Enumerable.Range(1, c)
+                .Select( x => new Demo());
+            var sw = new Stopwatch();
+            sw.Start();
+            await repository.BulkInsertAsync(data);
+            sw.Stop();
+            return  sw.ElapsedMilliseconds;
+        }
+    }
+
+    [DisableAuditing]
+    public class Demo : Abp.Domain.Entities.Entity
+    {
+        public string Name { get; set; }
+
+        public DateTime CreateTime { get; set; }
+
+        public decimal Fee { get; set; }
+
+        public int Status { get; set; }
+
+        public Demo()
+        {
+            Name = "Demo";
+            CreateTime = DateTime.Now;
+            Fee = 100M;
+            Status = 1;
         }
     }
 }
