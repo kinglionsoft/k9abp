@@ -6,6 +6,7 @@ using Abp.Dependency;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.IdentityServer4;
+using Abp.Organizations;
 using Abp.PlugIns;
 using Abp.Zero.EntityFrameworkCore;
 using K9Abp.Core;
@@ -45,6 +46,12 @@ namespace K9Abp.EntityFrameworkCore
         public virtual DbSet<Invoice> Invoices { get; set; }
 
         public virtual DbSet<PersistedGrantEntity> PersistedGrants { get; set; }
+
+        public virtual DbSet<Distinct> Distincts { get; set; }
+
+        public virtual DbSet<County> Counties { get; set; }
+
+        public virtual DbSet<DistinctOrganizationUnit> DistinctOrganizationUnits { get; set; }
 
         // TODO: Define an IDbSet for each entity of the application 
 
@@ -88,6 +95,11 @@ namespace K9Abp.EntityFrameworkCore
             {
                 b.HasIndex(e => new { e.Status, e.CreationTime });
                 b.HasIndex(e => new { e.PaymentId, e.Gateway });
+            });
+
+            modelBuilder.Entity<DistinctOrganizationUnit>(b =>
+            {
+                b.HasIndex(e => e.DistinctId);
             });
 
             modelBuilder.ConfigurePersistedGrantEntity();
