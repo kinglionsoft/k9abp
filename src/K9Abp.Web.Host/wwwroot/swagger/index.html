@@ -1,9 +1,9 @@
-﻿<!-- HTML for static distribution bundle build -->
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>%(DocumentTitle)</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./swagger-ui.css">
     <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
@@ -29,7 +29,6 @@
 </head>
 
 <body>
-
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
         <defs>
             <symbol viewBox="0 0 20 20" id="unlocked">
@@ -68,27 +67,63 @@
 
     <script src="./swagger-ui-bundle.js"></script>
     <script src="./swagger-ui-standalone-preset.js"></script>
-
-    <script src="ui/abp.js"></script>
-    <script src="ui/on-complete.js"></script>
+    <script src="/swagger/ui/abp.js"></script>
+    <script src="/swagger/ui/abp.swagger.js"></script>
     <script>
         window.onload = function () {
             var configObject = JSON.parse('%(ConfigObject)');
-            var oauthConfigObject = JSON.parse('%(OAuthConfigObject)');
 
             // Apply mandatory parameters
             configObject.dom_id = "#swagger-ui";
             configObject.presets = [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset];
             configObject.layout = "StandaloneLayout";
-
-            if (!configObject.hasOwnProperty("oauth2RedirectUrl"))
+            configObject.requestInterceptor = function (request) {
+                request.headers.Authorization = "Bearer " + abp.auth.getToken();
+                return request;
+            };
+            if (!configObject.hasOwnProperty("oauth2RedirectUrl")) {
                 configObject.oauth2RedirectUrl = window.location + "oauth2-redirect.html"; // use the built-in default
-
+            }
+            function getAuthorizeButtonText() {
+                return abp.auth.getToken() ? 'Logout' : 'Authorize';
+            }
+            function getAuthorizeButtonCssClass() {
+                return abp.auth.getToken() ? 'cancel' : 'authorize';
+            }
+            configObject.plugins = [
+                function (system) {
+                    return {
+                        components: {
+                            authorizeBtn: function () {
+                                return system.React.createElement("button",
+                                    {
+                                        id: "authorize",
+                                        className: "btn " + getAuthorizeButtonCssClass(),
+                                        style: {
+                                            lineHeight: "normal"
+                                        },
+                                        onClick: function () {
+                                            var authorizeButton = document.getElementById('authorize');
+                                            if (abp.auth.getToken()) {
+                                                abp.swagger.logout();
+                                                authorizeButton.innerText = getAuthorizeButtonText();
+                                                authorizeButton.className = 'btn ' + getAuthorizeButtonCssClass();
+                                            } else {
+                                                abp.swagger.openAuthDialog(function () {
+                                                    authorizeButton.innerText = getAuthorizeButtonText();
+                                                    authorizeButton.className = 'btn ' + getAuthorizeButtonCssClass();
+                                                    abp.swagger.closeAuthDialog();
+                                                });
+                                            }
+                                        }
+                                    }, getAuthorizeButtonText());
+                            }
+                        }
+                    }
+                }
+            ];
             // Build a system
-            const ui = SwaggerUIBundle(configObject);
-
-            // Apply OAuth config
-            ui.initOAuth(oauthConfigObject);
+            SwaggerUIBundle(configObject);
         }
     </script>
 </body>

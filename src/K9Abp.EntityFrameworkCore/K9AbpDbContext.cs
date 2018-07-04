@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Resources;
 using Abp.Dependency;
 using Abp.Domain.Repositories;
@@ -138,20 +139,29 @@ namespace K9Abp.EntityFrameworkCore
                 abpPlugInManager = new AbpPlugInManager();
                 abpPlugInManager.PlugInSources.AddFolder(pluginRoot);
             }
-            var configurationTypes = abpPlugInManager.PlugInSources.GetAllAssemblies()
-                .SelectMany(x => x.DefinedTypes
-                                .Where(p => !p.IsAbstract && p.IsClass && p.GetInterface(nameof(IEntityConfiguration)) != null)
-                                .Select(t => t.AsType()));
-            foreach (var configuration in configurationTypes)
+
+            try
             {
-                try
+                var configurationTypes = abpPlugInManager.PlugInSources.GetAllAssemblies()
+                    .SelectMany(x => x.DefinedTypes
+                        .Where(p => !p.IsAbstract && p.IsClass && p.GetInterface(nameof(IEntityConfiguration)) != null)
+                        .Select(t => t.AsType()));
+                foreach (var configuration in configurationTypes)
                 {
-                    (Activator.CreateInstance(configuration) as IEntityConfiguration).Configure(modelBuilder);
+                    try
+                    {
+                        (Activator.CreateInstance(configuration) as IEntityConfiguration).Configure(modelBuilder);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"Can't configure entities of {configuration.FullName}", ex);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Can't configure entities of {configuration.FullName}", ex);
-                }
+            }
+            catch (ReflectionTypeLoadException loadException)
+            {
+                throw new Exception(string.Join(" --> ", loadException.LoaderExceptions.Select(x => x.Message)),
+                    loadException);
             }
         }
     }

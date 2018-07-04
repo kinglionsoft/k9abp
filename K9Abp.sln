@@ -16,6 +16,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.Migrator", "src\K9Abp.Migrator\K9Abp.Migrator.csproj", "{880B3591-E057-46FE-B525-10BD83828B93}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.Web.Host", "src\K9Abp.Web.Host\K9Abp.Web.Host.csproj", "{38E184BD-E874-4633-A947-AED4FDB73F40}"
+	ProjectSection(ProjectDependencies) = postProject
+		{45D34376-72A2-48E4-B875-7FF00B099B4C} = {45D34376-72A2-48E4-B875-7FF00B099B4C}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.Web.Core", "src\K9Abp.Web.Core\K9Abp.Web.Core.csproj", "{22CFE0D2-8DCA-42D7-AD7D-784C3862493F}"
 EndProject

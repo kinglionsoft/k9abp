@@ -85,7 +85,7 @@ namespace K9Abp.Web.Host.Startup
                 options.DocInclusionPredicate((docName, description) => true);
 
                 // Define the BearerAuth scheme that's in use
-                options.AddSecurityDefinition("bearerAuth", new ApiKeyScheme()
+                options.AddSecurityDefinition("bearerAuth", new ApiKeyScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
                     Name = "Authorization",
@@ -125,6 +125,8 @@ namespace K9Abp.Web.Host.Startup
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
 
             app.UseStaticFiles();
+
+            app.UseEmbeddedFiles();
 
             app.UseAuthentication();
 

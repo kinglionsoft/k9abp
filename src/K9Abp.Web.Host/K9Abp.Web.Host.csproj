@@ -59,6 +59,11 @@
     <Folder Include="Plugins\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="wwwroot\swagger\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <Content Update="lang\AbpWeb\AbpWeb-en.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
