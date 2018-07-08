@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\K9Abp.Application\K9Abp.Application.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /E /Y /Q &quot;$(TargetDir)$(TargetFileName)&quot; ..\K9Abp.Web.Host\Plugins\&#xD;&#xA;xcopy /E /Y /Q &quot;$(TargetDir)$(TargetName).pdb&quot; ..\K9Abp.Web.Host\Plugins\" />
+  </Target>
+
+</Project>

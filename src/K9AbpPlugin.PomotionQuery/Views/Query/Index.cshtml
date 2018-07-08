@@ -1,0 +1,36 @@
+﻿@model Dictionary<string, string>
+
+@{
+    ViewBag["Title"] = "查询项目";
+}
+
+<div class="page__hd">
+    <h1 class="page__title">查询项目</h1>
+    <p class="page__desc">可用的查询项目</p>
+</div>
+
+<div class="page__bd">
+    <div class="weui-cells">
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <a class="weui-cell weui-cell_access" href="/Mobile/Data?item=@item.Key">
+                    <div class="weui-cell__bd">
+                        <p>@item.Value</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                    </div>
+                </a>
+            }
+        }
+        else
+        {
+            <a class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__bd">
+                    <p>暂无可用的查询项目</p>
+                </div>
+            </a>
+        }
+    </div>
+</div>

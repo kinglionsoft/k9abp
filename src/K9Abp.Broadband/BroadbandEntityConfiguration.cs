@@ -10,6 +10,7 @@ namespace K9Abp.Broadband
         {
             builder.Entity<BroadbandUser>(b =>
             {
+                b.ToTable("PluginBroadbandUser");
                 b.Property(e => e.Extra).HasColumnType("json");
             });
             builder.Entity<BroadbandUser>()

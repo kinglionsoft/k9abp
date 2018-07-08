@@ -1,0 +1,38 @@
+﻿@model string[]
+@{
+    ViewBag.Title = "数据内容";
+}
+
+<div class="page__hd">
+    <h1 class="page__title">@ViewBag.Phone</h1>
+    <p class="page__desc">@ViewBag.ItemName</p>
+</div>
+<div class="page__bd" style="padding-bottom: 50px;">
+    @if(Model == null)
+    {
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__bd">
+                <p>暂无可用的查询项目</p>
+            </div>
+        </a>
+    }
+    else
+    {
+        for(var i = 0; i < Model.Length; i = i + 2)
+        {
+            <div class="weui-cells__title">@Model[i]</div>
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>@Model[i+1]</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    <div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+            <a href="javascript:history.go(-1);" class="weui-footer__link">返回</a>
+        </p>
+    </div>
+</div>

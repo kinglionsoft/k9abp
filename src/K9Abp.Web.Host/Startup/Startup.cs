@@ -160,7 +160,7 @@ namespace K9Abp.Web.Host.Startup
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "K9Abp API V1");
                 options.DocumentTitle="K9Abp Api";
-                options.IndexStream = () => File.OpenRead(Path.Combine(_environment.ContentRootPath, "wwwroot", "swagger", "index.html"));
+                options.IndexStream = () => File.OpenRead(Path.Combine(_environment.ContentRootPath, "wwwroot", "swagger", "ui", "index.html"));
             }); // URL: /swagger
 #endif
         }

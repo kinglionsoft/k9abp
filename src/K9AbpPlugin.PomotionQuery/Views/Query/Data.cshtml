@@ -1,0 +1,44 @@
+﻿@model string
+@{
+    ViewBag.Title = "查询条件";
+}
+
+<div class="page__hd">
+    <h1 class="page__title">@ViewBag.ItemName</h1>
+    <p class="page__desc">请输入手机号码</p>
+</div>
+
+<div class="page__bd">
+    <div class="weui-search-bar weui-search-bar_focusing" id="searchBar">
+        <form id="searchForm" class="weui-search-bar__form" action="/Mobile/Data/Detail" method="get" autocomplete="off">
+            <input name="item" hidden="" value="@Model"/>
+            <div class="weui-search-bar__box">
+                <i class="weui-icon-search"></i>
+                <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="" name="phone">
+            </div>
+            <label class="weui-search-bar__label" id="searchText">
+                <i class="weui-icon-search"></i>
+                <span>搜索</span>
+            </label>
+            <input type="submit" hidden id="btn-submit"/>
+        </form>
+        <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function() {
+
+            $('#searchCancel').click(function () {
+                $('#searchForm').trigger('reset');
+            });
+
+            $('#searchInput').keydown(function(e){
+                if(e.keyCode === 13) {
+                    $('#searchForm').trigger('submit');
+                }
+            });
+        });
+    </script>
+}

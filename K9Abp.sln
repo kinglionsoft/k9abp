@@ -17,6 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.Migrator", "src\K9Abp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.Web.Host", "src\K9Abp.Web.Host\K9Abp.Web.Host.csproj", "{38E184BD-E874-4633-A947-AED4FDB73F40}"
 	ProjectSection(ProjectDependencies) = postProject
+		{40B01617-E53F-4A58-9C59-64DA8EBFFDF9} = {40B01617-E53F-4A58-9C59-64DA8EBFFDF9}
 		{45D34376-72A2-48E4-B875-7FF00B099B4C} = {45D34376-72A2-48E4-B875-7FF00B099B4C}
 	EndProjectSection
 EndProject
@@ -46,11 +47,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ORS.AspNetZeroCore.Web", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.Rename", "src\K9Abp.Rename\K9Abp.Rename.csproj", "{72005E59-2482-4BAB-93F5-C2BF7552F36B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.iDesk", "src\K9Abp.iDesk\K9Abp.iDesk.csproj", "{286452BD-FA37-4911-B011-5579D6D3AEA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9AbpPlugin.iDesk", "src\K9Abp.iDesk\K9AbpPlugin.iDesk.csproj", "{286452BD-FA37-4911-B011-5579D6D3AEA6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.NgAlain", "src\K9Abp.NgAlain\K9Abp.NgAlain.csproj", "{A258266A-4218-4D4A-AB17-46955FF21A60}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.Broadband", "src\K9Abp.Broadband\K9Abp.Broadband.csproj", "{45D34376-72A2-48E4-B875-7FF00B099B4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9AbpPlugin.Broadband", "src\K9Abp.Broadband\K9AbpPlugin.Broadband.csproj", "{45D34376-72A2-48E4-B875-7FF00B099B4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9AbpPlugin.PomotionQuery", "src\K9AbpPlugin.PomotionQuery\K9AbpPlugin.PomotionQuery.csproj", "{40B01617-E53F-4A58-9C59-64DA8EBFFDF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -118,6 +121,10 @@ Global
 		{45D34376-72A2-48E4-B875-7FF00B099B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D34376-72A2-48E4-B875-7FF00B099B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45D34376-72A2-48E4-B875-7FF00B099B4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40B01617-E53F-4A58-9C59-64DA8EBFFDF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40B01617-E53F-4A58-9C59-64DA8EBFFDF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40B01617-E53F-4A58-9C59-64DA8EBFFDF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40B01617-E53F-4A58-9C59-64DA8EBFFDF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -144,6 +151,7 @@ Global
 		{286452BD-FA37-4911-B011-5579D6D3AEA6} = {1C5D3462-14ED-4126-9D21-1142BEC08DD7}
 		{A258266A-4218-4D4A-AB17-46955FF21A60} = {81197F26-BE78-403B-9D8A-3C31EA8D96DD}
 		{45D34376-72A2-48E4-B875-7FF00B099B4C} = {1C5D3462-14ED-4126-9D21-1142BEC08DD7}
+		{40B01617-E53F-4A58-9C59-64DA8EBFFDF9} = {1C5D3462-14ED-4126-9D21-1142BEC08DD7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B342F8C7-B274-4220-B2A7-05B0F4D8C674}
