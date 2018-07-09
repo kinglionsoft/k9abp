@@ -15,64 +15,75 @@ namespace K9AbpPlugin.PomotionQuery.Controllers
     [Route("promotion/[controller]/[action]")]
     public class QueryController: AbpController
     {
-        private readonly IBulkRepository<PromotionTarget, long> _targetRepository;
-        private readonly IRepository<Promotion> _promotionRepository;
-        private readonly IRepository<QueryLog, long> _logRepository;
+        private readonly IPromotionService _service;
 
-        public QueryController(IRepository<QueryLog, long> logRepository, IRepository<Promotion> promotionRepository, IBulkRepository<PromotionTarget, long> targetRepository)
+        public QueryController(IPromotionService service)
         {
-            _logRepository = logRepository;
-            _promotionRepository = promotionRepository;
-            _targetRepository = targetRepository;
+            _service = service;
         }
 
         #region 查询
         
-        [Route("promotion/query")]
+        [HttpGet]
+        [Route("/promotion/query")]
         public async Task<IActionResult> Index()
         {
-            var promotions = await _promotionRepository.GetAllWithoutTracking()
-                .OrderByDescending(x => x.Id)
-                .ToDictionaryAsync(x => x.Id, x => x.Name);
+            var promotions = await _service.GetPromotionsAsync();
             return View(promotions);
         }
 
-        public async Task<IActionResult> Data(string phone, int promotionId)
+        [HttpGet]
+        public async Task<IActionResult> Data(int promotionId)
         {
-            var target = await _targetRepository
-                .GetAllWithoutTracking()
-                .Include(x => x.Promotion)
-                .FirstOrDefaultAsync(x => x.Phone == phone && x.PromotionId == promotionId);
-            if (target == null)
+            var promotion = await _service.GetPromotionAsync(promotionId);
+            return View(promotion);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(string phone, int promotionId)
+        {
+            TargetQueryOutput output;
+            var promotion = await _service.GetPromotionAsync(promotionId);
+            if (promotion == null)
             {
-                return View(new TargetQueryOutput
+                output = new TargetQueryOutput
                 {
                     PromotionId = promotionId,
                     Phone = phone,
-                    Error = $"没有查询到可用数据"
-                });
+                    PromotionName = "[无]",
+                    Error = "查询项目不存在"
+                };
             }
+            else
+            {
+                var target = await _service.GetTargetAsync(phone, promotionId);
 
-            await _logRepository.InsertAsync(new QueryLog
-            {
-                PromotionName = target.Promotion.Name,
-                Key = phone
-            });
-            
-            var output = new TargetQueryOutput
-            {
-                PromotionId = promotionId,
-                PromotionName = target.Promotion.Name,
-                Columns = target.Promotion.GetData<Dictionary<string, string>>("columns"),
-                Phone = phone,
-                Row = target.GetData<Dictionary<string, string>>("data"),
-            };
+                if (target == null)
+                {
+                    output = new TargetQueryOutput
+                    {
+                        PromotionId = promotionId,
+                        Phone = phone,
+                        PromotionName = promotion.Name,
+                        Error = "没有查询到可用数据"
+                    };
+                }
+                else
+                {
+                    output = new TargetQueryOutput
+                    {
+                        PromotionId = promotionId,
+                        PromotionName = promotion.Name,
+                        Columns = promotion.GetData<Dictionary<string, string>>("columns"),
+                        Phone = phone,
+                        Row = target.GetData<Dictionary<string, string>>("data"),
+                    };
+                }
+            }
 
             return View(output);
         }
 
         #endregion
-
-
     }
 }

@@ -23,7 +23,7 @@ namespace K9AbpPlugin.PomotionQuery
                 new EmbeddedResourceSet(
                     "/Views/",
                     Assembly.GetExecutingAssembly(),
-                    "Promotion.Views"
+                    "K9AbpPlugin.PomotionQuery.Views"
                 )
             );
         }

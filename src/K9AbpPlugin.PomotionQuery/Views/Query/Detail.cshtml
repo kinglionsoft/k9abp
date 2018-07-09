@@ -1,14 +1,14 @@
-﻿@model string[]
+﻿@model TargetQueryOutput
 @{
     ViewBag.Title = "数据内容";
 }
 
 <div class="page__hd">
-    <h1 class="page__title">@ViewBag.Phone</h1>
-    <p class="page__desc">@ViewBag.ItemName</p>
+    <h1 class="page__title">@Model.Phone</h1>
+    <p class="page__desc">@Model.PromotionName</p>
 </div>
 <div class="page__bd" style="padding-bottom: 50px;">
-    @if(Model == null)
+    @if (Model == null)
     {
         <a class="weui-cell weui-cell_access" href="javascript:;">
             <div class="weui-cell__bd">
@@ -16,15 +16,23 @@
             </div>
         </a>
     }
+    else if (!Model.Success)
+    {
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__bd">
+                <p>@Model.Error</p>
+            </div>
+        </a>
+    }
     else
     {
-        for(var i = 0; i < Model.Length; i = i + 2)
+        foreach (var item in Model.Columns)
         {
-            <div class="weui-cells__title">@Model[i]</div>
+            <div class="weui-cells__title">@item.Value</div>
             <div class="weui-cells">
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
-                        <p>@Model[i+1]</p>
+                        <p>@Model.Row[item.Key]</p>
                     </div>
                 </div>
             </div>

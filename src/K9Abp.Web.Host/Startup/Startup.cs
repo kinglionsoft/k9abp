@@ -117,6 +117,15 @@ namespace K9Abp.Web.Host.Startup
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseStatusCodePagesWithRedirects("/error/{0}");
+            }
+
             app.UseAbp(options =>
             {
                 options.UseAbpRequestLocalization = false; //disable automatic adding of request localization

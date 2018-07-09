@@ -1,0 +1,25 @@
+﻿@model Abp.Web.Mvc.Models.ErrorViewModel
+@{
+    ViewData["Title"] = "出错了";
+}
+
+<div class="weui-msg">
+    <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg"></i></div>
+    <div class="weui-msg__text-area">
+        <h2 class="weui-msg__title">出问题了</h2>
+        <p class="weui-msg__desc">@Model.ErrorInfo.Message</p>
+    </div>
+    <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+            <a href="/" class="weui-btn weui-btn_primary">返回首页</a>
+        </p>
+        <p class="weui-btn-area">
+            <a href="javascript: history.go(-1)" class="weui-btn weui-btn_default">返回上一页</a>
+        </p>
+    </div>
+    <div class="weui-msg__extra-area">
+        <div class="weui-footer">
+            <p class="weui-footer__text">Copyright © 2018</p>
+        </div>
+    </div>
+</div>

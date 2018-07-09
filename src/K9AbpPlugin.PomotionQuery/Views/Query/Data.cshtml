@@ -1,17 +1,17 @@
-﻿@model string
+﻿@model Promotion
 @{
     ViewBag.Title = "查询条件";
 }
 
 <div class="page__hd">
-    <h1 class="page__title">@ViewBag.ItemName</h1>
+    <h1 class="page__title">@Model.Name</h1>
     <p class="page__desc">请输入手机号码</p>
 </div>
 
 <div class="page__bd">
     <div class="weui-search-bar weui-search-bar_focusing" id="searchBar">
-        <form id="searchForm" class="weui-search-bar__form" action="/Mobile/Data/Detail" method="get" autocomplete="off">
-            <input name="item" hidden="" value="@Model"/>
+        <form id="searchForm" class="weui-search-bar__form" action="/Promotion/Query/Detail" method="get" autocomplete="off">
+            <input name="promotionId" hidden="" value="@Model.Id"/>
             <div class="weui-search-bar__box">
                 <i class="weui-icon-search"></i>
                 <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="" name="phone">

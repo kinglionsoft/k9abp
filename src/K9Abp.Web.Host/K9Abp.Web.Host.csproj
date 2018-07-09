@@ -19,6 +19,9 @@
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Plugins\K9Abp.iDesk.dll" />
     <None Remove="Plugins\K9Abp.iDesk.pdb" />
   </ItemGroup>
@@ -59,6 +62,7 @@
     <Folder Include="Plugins\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\_Layout.cshtml" />
     <EmbeddedResource Include="wwwroot\swagger\ui\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

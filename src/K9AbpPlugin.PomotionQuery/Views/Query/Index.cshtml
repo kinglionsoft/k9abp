@@ -1,7 +1,7 @@
-﻿@model Dictionary<string, string>
+﻿@model Dictionary<int, string>
 
 @{
-    ViewBag["Title"] = "查询项目";
+    ViewData["Title"] = "查询项目";
 }
 
 <div class="page__hd">
@@ -15,7 +15,7 @@
         {
             foreach (var item in Model)
             {
-                <a class="weui-cell weui-cell_access" href="/Mobile/Data?item=@item.Key">
+                <a class="weui-cell weui-cell_access" href="/Promotion/Query/Data?promotionId=@item.Key">
                     <div class="weui-cell__bd">
                         <p>@item.Value</p>
                     </div>

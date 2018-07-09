@@ -10,6 +10,6 @@ namespace K9AbpPlugin.PomotionQuery.Dto
         public string Phone { get; set; }
         public Dictionary<string, string> Row { get; set; }
         public string Error { get; set; }
-        public bool Success => !string.IsNullOrEmpty(Error);
+        public bool Success => string.IsNullOrEmpty(Error);
     }
 }

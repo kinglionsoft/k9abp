@@ -15,9 +15,6 @@ namespace K9AbpPlugin.PomotionQuery.Domain
         [Required]
         public virtual int PromotionId { get; set; }
 
-        [ForeignKey("PromotionId")]
-        public virtual Promotion Promotion { get; set; }
-
         [Required]
         public virtual int TenantId { get; set; }
 

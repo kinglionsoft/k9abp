@@ -6,7 +6,6 @@ using Abp;
 using Abp.Extensions;
 using Abp.Notifications;
 using Abp.Timing;
-using Microsoft.Extensions.Logging;
 using K9Abp.Web.Core.Controllers;
 using System.Diagnostics;
 using Abp.Auditing;
