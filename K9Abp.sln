@@ -55,6 +55,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9AbpPlugin.Broadband", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9AbpPlugin.PomotionQuery", "src\K9AbpPlugin.PomotionQuery\K9AbpPlugin.PomotionQuery.csproj", "{40B01617-E53F-4A58-9C59-64DA8EBFFDF9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hangfire.MySql.Core", "..\..\..\Github\Hangfire.MySql.Core\Hangfire.MySql\Hangfire.MySql.Core.csproj", "{8FE27AA9-DCA0-41B3-AF39-42A75D6C9972}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,10 @@ Global
 		{40B01617-E53F-4A58-9C59-64DA8EBFFDF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40B01617-E53F-4A58-9C59-64DA8EBFFDF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40B01617-E53F-4A58-9C59-64DA8EBFFDF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE27AA9-DCA0-41B3-AF39-42A75D6C9972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE27AA9-DCA0-41B3-AF39-42A75D6C9972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE27AA9-DCA0-41B3-AF39-42A75D6C9972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE27AA9-DCA0-41B3-AF39-42A75D6C9972}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -152,6 +158,7 @@ Global
 		{A258266A-4218-4D4A-AB17-46955FF21A60} = {81197F26-BE78-403B-9D8A-3C31EA8D96DD}
 		{45D34376-72A2-48E4-B875-7FF00B099B4C} = {1C5D3462-14ED-4126-9D21-1142BEC08DD7}
 		{40B01617-E53F-4A58-9C59-64DA8EBFFDF9} = {1C5D3462-14ED-4126-9D21-1142BEC08DD7}
+		{8FE27AA9-DCA0-41B3-AF39-42A75D6C9972} = {146542FD-DA5B-49C3-81E6-15D41DCA251E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B342F8C7-B274-4220-B2A7-05B0F4D8C674}

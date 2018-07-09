@@ -11,8 +11,9 @@ namespace K9Abp.Web.Host.Controllers
     public class ErrorController: K9AbpControllerBase
     {
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [HttpGet("/error/")]
         [HttpGet("/error/{status}")]
-        public IActionResult Index(int status)
+        public IActionResult Index(int status = 500)
         {
             string message;
             var detail = string.Empty;

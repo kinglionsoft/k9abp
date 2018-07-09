@@ -1,14 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Abp.AspNetCore.Mvc.Controllers;
 using Abp.Domain.Entities;
-using Abp.Domain.Repositories;
 using K9AbpPlugin.PomotionQuery.Domain;
 using K9AbpPlugin.PomotionQuery.Dto;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace K9AbpPlugin.PomotionQuery.Controllers
 {

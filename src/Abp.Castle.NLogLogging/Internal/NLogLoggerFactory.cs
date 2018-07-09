@@ -18,11 +18,9 @@ namespace Abp.Castle.NLogLogging.Internal
 
         public NLogLoggerFactory(string configFile)
         {
-            if (!File.Exists(configFile))
-            {
-                throw new FileNotFoundException(configFile);
-            }
-            LogManager.Configuration = new XmlLoggingConfiguration(configFile);
+            LogManager.Configuration = !File.Exists(configFile) 
+                ? new XmlLoggingConfiguration(DefaultConfigFileName) 
+                : new XmlLoggingConfiguration(configFile);
         }
 
         public override ILogger Create(string name)

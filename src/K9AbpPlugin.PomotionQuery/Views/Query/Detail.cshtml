@@ -32,7 +32,7 @@
             <div class="weui-cells">
                 <div class="weui-cell">
                     <div class="weui-cell__bd">
-                        <p>@Model.Row[item.Key]</p>
+                        <p>@Html.Raw(Model.Row.ContainsKey(item.Key) ? Model.Row[item.Key] : "【N/A】")</p>
                     </div>
                 </div>
             </div>

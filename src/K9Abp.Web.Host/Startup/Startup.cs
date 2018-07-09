@@ -117,12 +117,13 @@ namespace K9Abp.Web.Host.Startup
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (env.IsDevelopment())
+            if (!env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
+                app.UseExceptionHandler("/error/");
                 app.UseStatusCodePagesWithRedirects("/error/{0}");
             }
 
