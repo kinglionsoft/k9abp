@@ -27,6 +27,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using K9Abp.Application;
 using K9Abp.Application.Authorization;
+using K9Abp.Core;
 using K9Abp.Core.Authorization.Impersonation;
 using K9Abp.Core.Authorization.Users;
 using K9Abp.Core.Identity;

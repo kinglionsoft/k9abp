@@ -1,6 +1,6 @@
 ﻿using Abp.Web.Models;
 using Abp.Web.Mvc.Models;
-using K9Abp.Web.Core.Controllers;
+using K9Abp.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

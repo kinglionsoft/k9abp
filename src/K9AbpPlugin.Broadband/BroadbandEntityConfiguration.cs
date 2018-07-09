@@ -1,8 +1,8 @@
-﻿using K9Abp.Broadband.User;
-using K9Abp.Core;
+﻿using K9Abp.Core;
+using K9AbpPlugin.Broadband.User;
 using Microsoft.EntityFrameworkCore;
 
-namespace K9Abp.Broadband
+namespace K9AbpPlugin.Broadband
 {
     internal class BroadbandEntityConfiguration: IEntityConfiguration
     {
@@ -12,9 +12,8 @@ namespace K9Abp.Broadband
             {
                 b.ToTable("PluginBroadbandUser");
                 b.Property(e => e.Extra).HasColumnType("json");
+                b.HasIndex(x => x.Phone).HasName("idx_phone");
             });
-            builder.Entity<BroadbandUser>()
-                .HasIndex(x => x.Phone).HasName("idx_phone");
         }
     }
 }

@@ -39,7 +39,7 @@ namespace K9Abp.EntityFrameworkCore.Repositories
                     Context.Entry(entity).State = EntityState.Added;
                 }
 
-                return Context.CurrentUnitOfWorkProvider.Current.SaveChangesAsync();
+                return UnitOfWorkManager.Current.SaveChangesAsync();
             }
             finally
             {

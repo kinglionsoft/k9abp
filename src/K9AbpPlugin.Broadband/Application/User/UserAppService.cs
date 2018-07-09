@@ -1,7 +1,6 @@
 ﻿using Abp.Domain.Repositories;
 using K9Abp.Application;
-
-namespace K9Abp.Broadband.User
+namespace K9AbpPlugin.Broadband.User
 {
     public class UserAppService: K9AbpAppServiceBase
     {

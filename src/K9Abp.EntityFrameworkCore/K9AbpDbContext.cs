@@ -52,6 +52,8 @@ namespace K9Abp.EntityFrameworkCore
 
         public virtual DbSet<County> Counties { get; set; }
 
+        public virtual DbSet<K9Abp.Core.EntityDemo.ProductDemo> ProductDemos { get; set; }
+
         public virtual DbSet<DistinctOrganizationUnit> DistinctOrganizationUnits { get; set; }
 
         // TODO: Define an IDbSet for each entity of the application 

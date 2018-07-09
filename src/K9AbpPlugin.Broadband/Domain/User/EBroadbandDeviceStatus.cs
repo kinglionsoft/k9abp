@@ -1,4 +1,4 @@
-﻿namespace K9Abp.Broadband.User
+﻿namespace K9AbpPlugin.Broadband.User
 {
     public enum EBroadbandDeviceStatus
     {

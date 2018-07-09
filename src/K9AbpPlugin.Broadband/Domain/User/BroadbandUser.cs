@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities;
 using Abp.Organizations;
 
-namespace K9Abp.Broadband.User
+namespace K9AbpPlugin.Broadband.User
 {
     public class BroadbandUser: Entity, IMustHaveOrganizationUnit, IMustHaveTenant
     {

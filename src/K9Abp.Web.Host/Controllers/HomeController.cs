@@ -6,10 +6,12 @@ using Abp;
 using Abp.Extensions;
 using Abp.Notifications;
 using Abp.Timing;
-using K9Abp.Web.Core.Controllers;
 using System.Diagnostics;
 using Abp.Auditing;
 using Abp.Domain.Repositories;
+using K9Abp.Core;
+using K9Abp.Core.EntityDemo;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace K9Abp.Web.Host.Controllers
 {
@@ -54,35 +56,17 @@ namespace K9Abp.Web.Host.Controllers
         }
 
         [DisableAuditing]
-        public async Task<long> Test(int c, [FromServices]IBulkRepository<Demo> repository)
+        public async Task<long> Test(int c)
         {
+            var repository = Request.HttpContext.RequestServices.GetService<IBulkRepository<ProductDemo>>();
+
             var data = Enumerable.Range(1, c)
-                .Select( x => new Demo());
+                .Select( x => new ProductDemo());
             var sw = new Stopwatch();
             sw.Start();
             await repository.BulkInsertAsync(data);
             sw.Stop();
             return  sw.ElapsedMilliseconds;
-        }
-    }
-
-    [DisableAuditing]
-    public class Demo : Abp.Domain.Entities.Entity
-    {
-        public string Name { get; set; }
-
-        public DateTime CreateTime { get; set; }
-
-        public decimal Fee { get; set; }
-
-        public int Status { get; set; }
-
-        public Demo()
-        {
-            Name = "Demo";
-            CreateTime = DateTime.Now;
-            Fee = 100M;
-            Status = 1;
         }
     }
 }

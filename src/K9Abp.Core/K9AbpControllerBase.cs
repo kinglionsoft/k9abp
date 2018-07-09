@@ -3,9 +3,8 @@ using Abp.AspNetCore.Mvc.Controllers;
 using Abp.IdentityFramework;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using K9Abp.Core;
 
-namespace K9Abp.Web.Core.Controllers
+namespace K9Abp.Core
 {
     public abstract class K9AbpControllerBase: AbpController
     {

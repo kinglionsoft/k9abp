@@ -4,9 +4,8 @@ using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Resources.Embedded;
 using K9Abp.Core;
-using Microsoft.AspNetCore.Builder;
 
-namespace K9Abp.Broadband
+namespace K9AbpPlugin.Broadband
 {
     [DependsOn(
         typeof(K9AbpCoreModule))]
