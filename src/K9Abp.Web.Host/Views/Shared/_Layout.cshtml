@@ -11,7 +11,14 @@
     <environment exclude="Development">
         <link href="/lib/weui/weui.min.css" rel="stylesheet" />
     </environment>
+    <environment include="Development">
+        <link href="/lib/jquery-weui/css/jquery-weui.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="/lib/jquery-weui/css/jquery-weui.min.css" rel="stylesheet" />
+    </environment>
     <link href="~/mobile/site.css" rel="stylesheet" />
+    @RenderSection("Head", required: false)
 </head>
 <body>
 <div class="container" id="container">
@@ -19,13 +26,16 @@
         @RenderBody()
     </div>
 </div>
-
-<environment include="Development">
-    <script src="/lib/jquery/dist/jquery.js"></script>
-</environment>
-<environment exclude="Development">
-    <script src="/lib/jquery/dist/jquery.min.js"></script>
-</environment>
+<script type='application/javascript' src='/lib/fastclick/fastclick.js'></script>
+<script>
+    if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function() {
+            FastClick.attach(document.body);
+        }, false);
+    }
+</script>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="/lib/jquery-weui/js/jquery-weui.min.js"></script>
 
 @RenderSection("Scripts", required: false)
 </body>

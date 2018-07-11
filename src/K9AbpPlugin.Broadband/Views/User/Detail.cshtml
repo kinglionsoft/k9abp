@@ -1,0 +1,212 @@
+﻿@model K9AbpPlugin.Broadband.User.BroadbandUserDto
+
+@{
+    ViewBag.Title = "宽带用户";
+}
+
+@section Head { 
+<style>
+        .color-0 {
+            background-color: #1AAD19;
+        }
+        .color-1 {
+            background-color: yellow;
+        }
+
+        .color-2 {
+            background-color: red;
+        }
+
+        .color-3 {
+            background-color: gray;
+        }
+</style>
+}
+
+<div class="page__hd">
+    <h1 class="page__title">@Model.Phone <span class="pull-right weui-badge @Html.Raw("color-"+(int)Model.Status)">@Model.Status</span> </h1>
+    <p class="page__desc">@Model.Tariff</p>
+</div>
+<div class="page__bd" style="padding-bottom: 50px;">
+
+    <div class="weui-cells__title">县区</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.CountyName</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">片区</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.DistinctName</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">渠道</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.OrganizationUnitName</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">拍照套餐</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.SpotProduct</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">拍照带宽</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.SpotBandwidth</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">带宽</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.Bandwidth M</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">分纤箱</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.FiberBox</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">入网时间</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.JoinTime.ToString("yyyy-MM-dd")</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">到期时间</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.ExpireTime.ToString("yyyy-MM-dd")</p>
+            </div>
+        </div>
+    </div><div class="weui-cells__title">近6月平均消费</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Html.Raw((Model.Fee6 * 0.01M).ToString("N2"))</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">平均流量</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.Gprs M</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">套外流量</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.ExtraGprs M</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">套外语音</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.ExtraVoice 分钟</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">保有优先级</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.RetentionPriority</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">保有情况</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.Retention</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">升级优先级</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.UpgradePriority</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">升级情况</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.Upgrade</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">设备情况</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@Model.DeviceStatus</p>
+            </div>
+        </div>
+    </div>
+    
+    @if (Model.Extra?.Object != null)
+    {
+        foreach (var item in Model.Extra.Object)
+        {
+            <div class="weui-cells__title">@item.Key</div>
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>@item.Value</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    <div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+            <a href="javascript:history.go(-1);" class="weui-footer__link">返回</a>
+        </p>
+    </div>
+</div>

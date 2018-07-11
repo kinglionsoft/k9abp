@@ -31,6 +31,10 @@ ul {
     left: 0
 }
 
+.pull-right {
+    float: right;
+}
+
 .page {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -42,7 +46,8 @@ ul {
     }
 
 .page__hd {
-    padding: 40px
+    padding: 20px 40px;
+    background: white;
 }
 
 .page__bd_spacing {

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace K9AbpPlugin.PomotionQuery.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("promotion/[controller]/[action]")]
     public class QueryController: AbpController
     {

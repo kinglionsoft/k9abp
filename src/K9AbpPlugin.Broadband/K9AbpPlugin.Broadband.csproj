@@ -22,11 +22,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Views\Home\Index.cshtml" />
+    <None Remove="Views\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Views\Home\Index.cshtml" />
+    <EmbeddedResource Include="Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Channel\Warn.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

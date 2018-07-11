@@ -23,7 +23,7 @@ namespace K9AbpPlugin.Broadband
                 new EmbeddedResourceSet(
                     "/Views/",
                     Assembly.GetExecutingAssembly(),
-                    "K9Abp.Broadband.Views"
+                    "K9AbpPlugin.Broadband.Views"
                 )
             );
         }
