@@ -3,7 +3,9 @@ using Abp.AspNetCore.Configuration;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Resources.Embedded;
+using Abp.Threading.BackgroundWorkers;
 using K9Abp.Core;
+using K9AbpPlugin.Broadband.Jobs;
 
 namespace K9AbpPlugin.Broadband
 {
@@ -26,6 +28,12 @@ namespace K9AbpPlugin.Broadband
                     "K9AbpPlugin.Broadband.Views"
                 )
             );
+
+            Configuration.Settings.Providers.Add<BroadbandSettingProvider>();
+        }
+
+        public override void PostInitialize()
+        {
         }
 
         public override void Initialize()

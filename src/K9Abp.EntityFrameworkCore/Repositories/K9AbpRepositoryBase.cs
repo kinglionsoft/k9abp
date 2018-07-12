@@ -18,8 +18,7 @@ namespace K9Abp.EntityFrameworkCore.Repositories
     /// <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
     public class K9AbpRepositoryBase<TEntity, TPrimaryKey> 
         : EfCoreRepositoryBase<K9AbpDbContext, TEntity, TPrimaryKey>,
-            IRepository<TEntity, TPrimaryKey>,
-            IBulkRepository<TEntity, TPrimaryKey>
+            IRepository<TEntity, TPrimaryKey>
         where TEntity : class, IEntity<TPrimaryKey>
     {
         public K9AbpRepositoryBase(IDbContextProvider<K9AbpDbContext> dbContextProvider)
@@ -28,6 +27,15 @@ namespace K9Abp.EntityFrameworkCore.Repositories
         }
 
         //TODO:  Add your common methods for all repositories
+
+        public Task ExecuteSqlAsync(string sql, IEnumerable<object> parameters = null, CancellationToken token = default)
+        {
+            if (parameters == null)
+            {
+                parameters = new object[0];
+            }
+            return  Context.Database.ExecuteSqlCommandAsync(sql, parameters, token);
+        }
 
         public virtual Task BulkInsertAsync(IEnumerable<TEntity> entities, CancellationToken token = default)
         {
@@ -58,7 +66,7 @@ namespace K9Abp.EntityFrameworkCore.Repositories
     /// This is a shortcut of <see cref="K9AbpRepositoryBase{TEntity,TPrimaryKey}"/> for <see cref="int"/> primary key.
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
-    public class K9AbpRepositoryBase<TEntity> : K9AbpRepositoryBase<TEntity, int>, IRepository<TEntity>, IBulkRepository<TEntity>
+    public class K9AbpRepositoryBase<TEntity> : K9AbpRepositoryBase<TEntity, int>, IRepository<TEntity>
         where TEntity : class, IEntity<int>
     {
         public K9AbpRepositoryBase(IDbContextProvider<K9AbpDbContext> dbContextProvider)

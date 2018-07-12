@@ -1,15 +1,18 @@
-﻿using Abp.EntityFrameworkCore.Configuration;
+﻿using Abp.Dependency;
+using Abp.Domain.Repositories;
+using Abp.EntityFrameworkCore.Configuration;
 using Abp.IdentityServer4;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Zero.EntityFrameworkCore;
 using K9Abp.Core;
+using K9Abp.EntityFrameworkCore.Repositories;
 using K9Abp.EntityFrameworkCore.Seed;
 
 namespace K9Abp.EntityFrameworkCore
 {
     [DependsOn(
-        typeof(K9AbpCoreModule), 
+        typeof(K9AbpCoreModule),
         typeof(AbpZeroCoreEntityFrameworkCoreModule),
         typeof(AbpZeroCoreIdentityServerEntityFrameworkCoreModule)
         )]
@@ -42,6 +45,8 @@ namespace K9Abp.EntityFrameworkCore
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(typeof(K9AbpEntityFrameworkModule).GetAssembly());
+            IocManager.Register(typeof(IRepository<,>), typeof(K9AbpRepositoryBase<,>), DependencyLifeStyle.Transient);
+            IocManager.Register(typeof(IRepository<>), typeof(K9AbpRepositoryBase<>), DependencyLifeStyle.Transient);
         }
 
         public override void PostInitialize()

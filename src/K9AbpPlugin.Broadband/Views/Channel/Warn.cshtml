@@ -1,7 +1,7 @@
-﻿@model System.Collections.Generic.List<K9AbpPlugin.Broadband.User.WarnDto>
+﻿@model K9AbpPlugin.Broadband.User.ChannelWarnDto
 
 @{
-    ViewBag.Title = "离网预警";
+    ViewBag.Title = "渠道预警";
 }
 
 @section Head { 
@@ -18,21 +18,24 @@
 }
 
 <div class="page__hd">
-    <h1 class="page__title"> 片区离网预警用户 </h1>
-    <p class="page__desc">各渠道宽带即将到期的用户</p>
+    <h1 class="page__title"> 渠道离网预警用户 </h1>
+    <p class="page__desc">@Model.OrganizationUnitName</p>
 </div>
-<div class="page__bd" style="padding-bottom: 50px;">
+<div class="page__bd">
 
-    <div class="weui-cells__title">解放路营业厅</div>
     <div class="weui-cells">
-        <a class="weui-cell weui-cell_access" href="javascript:;">
-            <div class="weui-cell__bd">
-                <p>13912341243<span class="weui-badge">剩余：30天</span></p>
-                <p class="desc">200M家庭套餐</p>
-            </div>
-            <div class="weui-cell__ft">
-            </div>
-        </a>
+        @foreach (var user in Model.Users)
+        {
+            <a class="weui-cell weui-cell_access" href="/broadband/user/detail?id=@user.Id">
+                <div class="weui-cell__bd">
+                    <p>@user.Phone</p>
+                    <p class="desc">@user.SpotProduct</p>
+                </div>
+                <span class="weui-badge">剩余：@user.Left 天</span>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+        }
     </div>
 
     <div class="weui-footer weui-footer_fixed-bottom">

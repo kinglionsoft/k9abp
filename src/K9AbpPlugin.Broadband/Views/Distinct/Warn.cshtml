@@ -1,0 +1,44 @@
+﻿@model List<K9AbpPlugin.Broadband.User.DistinctWarnSummaryDto>
+
+@{
+    ViewBag.Title = "片区预警";
+}
+
+@section Head { 
+    <style>
+        .weui-cell__bd .weui-badge {
+            margin-left: 20px;
+        }
+
+        .weui-cell__bd .desc {
+            padding-top: 10px;
+            font-size: 0.75em;
+        }
+    </style>
+}
+
+<div class="page__hd">
+    <h1 class="page__title"> 片区离网预警用户 </h1>
+    <p class="page__desc">各渠道宽带即将到期的用户</p>
+</div>
+<div class="page__bd">
+    <div class="weui-cells">
+        @foreach (var channel in Model)
+        {
+        <a class="weui-cell weui-cell_access" href="/broadband/channel/warn?id=@channel.OrganizationUnitId">
+            <div class="weui-cell__bd">
+                <p>@channel.OrganizationUnitName</p>
+            </div>
+            <span class="weui-badge">@channel.Count</span>
+            <div class="weui-cell__ft">
+            </div>
+        </a>
+        }
+    </div>
+
+    <div class="weui-footer weui-footer_fixed-bottom">
+        <p class="weui-footer__links">
+            <a href="javascript:history.go(-1);" class="weui-footer__link">返回</a>
+        </p>
+    </div>
+</div>

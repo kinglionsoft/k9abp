@@ -58,7 +58,7 @@ namespace K9Abp.Web.Host.Controllers
         [DisableAuditing]
         public async Task<long> Test(int c)
         {
-            var repository = Request.HttpContext.RequestServices.GetService<IBulkRepository<ProductDemo>>();
+            var repository = Request.HttpContext.RequestServices.GetService<IRepository<ProductDemo>>();
 
             var data = Enumerable.Range(1, c)
                 .Select( x => new ProductDemo());

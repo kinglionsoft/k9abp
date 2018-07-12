@@ -11,8 +11,10 @@ using Abp.IO;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Runtime.Caching.Redis;
+using Abp.Threading.BackgroundWorkers;
 using Abp.Web.Configuration;
 using Abp.Zero.Configuration;
+using Hangfire;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -116,6 +118,13 @@ namespace K9Abp.Web.Core
         public override void PostInitialize()
         {
             SetAppFolders();
+
+            // add jobs
+            var jobs = IocManager.ResolveAll<IScheduleWorker>();
+            foreach (var job in jobs)
+            {
+                Hangfire.RecurringJob.AddOrUpdate(job.Name,()=> job.DoWorkAsync(), job.Corn, TimeZoneInfo.Local);
+            }
         }
 
         private void SetAppFolders()

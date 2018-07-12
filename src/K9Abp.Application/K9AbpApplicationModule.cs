@@ -30,8 +30,6 @@ namespace K9Abp.Application
             var thisAssembly = typeof(K9AbpApplicationModule).GetAssembly();
 
             IocManager.RegisterAssemblyByConvention(thisAssembly);
-            IocManager.Register(typeof(IBulkRepository<,>), typeof(K9AbpRepositoryBase<,>), DependencyLifeStyle.Transient);
-            IocManager.Register(typeof(IBulkRepository<>), typeof(K9AbpRepositoryBase<>), DependencyLifeStyle.Transient);
         }
     }
 }

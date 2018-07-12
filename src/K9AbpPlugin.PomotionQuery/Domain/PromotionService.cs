@@ -9,11 +9,11 @@ namespace K9AbpPlugin.PomotionQuery.Domain
 {
     public class PromotionService : K9AbpDomainServiceBase, IPromotionService
     {
-        private readonly IBulkRepository<PromotionTarget, long> _targetRepository;
-        private readonly IBulkRepository<Promotion> _promotionRepository;
-        private readonly IBulkRepository<QueryLog, long> _logRepository;
+        private readonly IRepository<PromotionTarget, long> _targetRepository;
+        private readonly IRepository<Promotion> _promotionRepository;
+        private readonly IRepository<QueryLog, long> _logRepository;
 
-        public PromotionService(IBulkRepository<QueryLog, long> logRepository, IBulkRepository<Promotion> promotionRepository, IBulkRepository<PromotionTarget, long> targetRepository)
+        public PromotionService(IRepository<QueryLog, long> logRepository, IRepository<Promotion> promotionRepository, IRepository<PromotionTarget, long> targetRepository)
         {
             _logRepository = logRepository;
             _promotionRepository = promotionRepository;
