@@ -6,9 +6,9 @@ namespace K9AbpPlugin.Broadband.User
 {
     public class ChannelWarnDto
     {
-        public int CountyId { get; set; }
+        public long CountyId { get; set; }
         public string CountyName { get; set; }
-        public int DistinctId { get; set; }
+        public long DistinctId { get; set; }
         public string DistinctName { get; set; }
         public long OrganizationUnitId { get; set; }
         public string OrganizationUnitName { get; set; }

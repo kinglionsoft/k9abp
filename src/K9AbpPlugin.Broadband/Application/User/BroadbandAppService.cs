@@ -18,12 +18,15 @@ namespace K9AbpPlugin.Broadband.User
         private readonly IRepository<BroadbandUser> _userRepository;
         private readonly IRepository<BroadbandWarn> _warnRepository;
         private readonly IOrganizationUnitCache _organizationUnitCache;
-        private readonly IDistinctOrganizationService _distinctOrganizationService;
+        private readonly OrganizationUnitManager _organizationUnitManager;
 
-        public BroadbandAppService(IRepository<BroadbandUser> userUepository, IDistinctOrganizationService distinctOrganizationService, IRepository<BroadbandWarn> warnRepository, IOrganizationUnitCache organizationUnitCache)
+        public BroadbandAppService(IRepository<BroadbandUser> userUepository,
+            OrganizationUnitManager organizationUnitManager, 
+            IRepository<BroadbandWarn> warnRepository, 
+            IOrganizationUnitCache organizationUnitCache)
         {
             _userRepository = userUepository;
-            _distinctOrganizationService = distinctOrganizationService;
+            _organizationUnitManager = organizationUnitManager;
             _warnRepository = warnRepository;
             _organizationUnitCache = organizationUnitCache;
         }
@@ -44,8 +47,16 @@ namespace K9AbpPlugin.Broadband.User
                 throw new UserFriendlyException(404, $"用户({id})不存在");
             }
             var dto = ObjectMapper.Map<BroadbandUserDto>(user);
-            var ou = await _distinctOrganizationService.GetAsync(user.OrganizationUnitId);
-            dto.SetOrganization(ou);
+            var ou = await _organizationUnitCache.GetAsync(dto.OrganizationUnitId);
+            if (ou.Type == EOrganizationUnitType.Channel)
+            {
+                dto.OrganizationUnitName = ou.DisplayName;
+                dto.DistinctId = ou.Parent.Id;
+                dto.DistinctName = ou.Parent.DisplayName;
+                var county = await _organizationUnitCache.GetAsync(dto.DistinctId);
+                dto.CountyId = county.Id;
+                dto.CountyName = county.DisplayName;
+            }
             return dto;
         }
 
@@ -87,10 +98,15 @@ namespace K9AbpPlugin.Broadband.User
             var ou = _organizationUnitCache.Get(organizationUnitId);
             result.OrganizationUnitId = organizationUnitId;
             result.OrganizationUnitName = ou.DisplayName;
-            result.DistinctId = ou.DistinctId;
-            result.DistinctName = ou.DistinctName;
-            result.CountyId = ou.CountyId;
-            result.CountyName = ou.CountyName;
+            if (ou.Type == EOrganizationUnitType.Channel)
+            {
+                result.OrganizationUnitName = ou.DisplayName;
+                result.DistinctId = ou.Parent.Id;
+                result.DistinctName = ou.Parent.DisplayName;
+                var county = await _organizationUnitCache.GetAsync(result.DistinctId);
+                result.CountyId = county.Id;
+                result.CountyName = county.DisplayName;
+            }
             return result;
         }
 

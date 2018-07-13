@@ -48,14 +48,8 @@ namespace K9Abp.EntityFrameworkCore
 
         public virtual DbSet<PersistedGrantEntity> PersistedGrants { get; set; }
 
-        public virtual DbSet<Distinct> Distincts { get; set; }
-
-        public virtual DbSet<County> Counties { get; set; }
-
         public virtual DbSet<K9Abp.Core.EntityDemo.ProductDemo> ProductDemos { get; set; }
-
-        public virtual DbSet<DistinctOrganizationUnit> DistinctOrganizationUnits { get; set; }
-
+        
         // TODO: Define an IDbSet for each entity of the application 
 
         public K9AbpDbContext(DbContextOptions<K9AbpDbContext> options)
@@ -98,11 +92,6 @@ namespace K9Abp.EntityFrameworkCore
             {
                 b.HasIndex(e => new { e.Status, e.CreationTime });
                 b.HasIndex(e => new { e.PaymentId, e.Gateway });
-            });
-
-            modelBuilder.Entity<DistinctOrganizationUnit>(b =>
-            {
-                b.HasIndex(e => e.DistinctId);
             });
 
             modelBuilder.ConfigurePersistedGrantEntity();

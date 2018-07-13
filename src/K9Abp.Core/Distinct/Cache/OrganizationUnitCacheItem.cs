@@ -1,4 +1,5 @@
-﻿using Abp.AutoMapper;
+﻿using System.Linq;
+using Abp.AutoMapper;
 
 namespace Abp.Organizations
 {
@@ -6,12 +7,17 @@ namespace Abp.Organizations
     public class OrganizationUnitCacheItem
     {
         public long Id { get; set; }
-        public long? ParentId { get; set; }
         public string Code { get; set; }
         public string DisplayName { get; set; }
-        public int CountyId { get; set; }
-        public string CountyName { get; set; }
-        public int DistinctId { get; set; }
-        public string DistinctName { get; set; }
+        public OrganizationUnitCacheItem Parent { get; set; }
+
+        public EOrganizationUnitType Type
+        {
+            get
+            {
+                var count = Code.ToCharArray().Count(x => x == '.');
+                return (EOrganizationUnitType) count;
+            }
+        }
     }
 }
