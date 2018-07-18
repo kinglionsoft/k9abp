@@ -103,8 +103,16 @@ namespace K9Abp.EntityFrameworkCore
             // Naming convention
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
-                var currentTableName = modelBuilder.Entity(entity.Name).Metadata.Relational().TableName;
-                modelBuilder.Entity(entity.Name).ToTable(currentTableName.ToSingular().ToSnakeCase());
+                var dbsetBuilder = modelBuilder.Entity(entity.Name);
+                var currentTableName = dbsetBuilder.Metadata.Relational().TableName;
+                if (entity.ClrType.Namespace.StartsWith("K9AbpPlugin"))
+                {
+                    dbsetBuilder.ToTable("plugin_" + currentTableName.ToSingular().ToSnakeCase());
+                }
+                else
+                {
+                    dbsetBuilder.ToTable(currentTableName.ToSingular().ToSnakeCase());
+                }
             }
         }
 

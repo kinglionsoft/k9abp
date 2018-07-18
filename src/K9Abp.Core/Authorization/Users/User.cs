@@ -25,6 +25,11 @@ namespace K9Abp.Core.Authorization.Users
             IsLockoutEnabled = false;
             IsTwoFactorEnabled = false;
             ShouldChangePasswordOnNextLogin = false;
+            IsActive = true;
+            IsDeleted = false;
+            AccessFailedCount = 0;
+            IsEmailConfirmed = false;
+            IsPhoneNumberConfirmed = false;
         }
 
         /// <summary>

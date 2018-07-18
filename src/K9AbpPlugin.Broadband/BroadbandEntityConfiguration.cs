@@ -11,15 +11,14 @@ namespace K9AbpPlugin.Broadband
         {
             builder.Entity<BroadbandUser>(b =>
             {
-                b.ToTable("PluginBroadbandUser");
                 b.Property(e => e.Extra).HasColumnType("json");
                 b.HasIndex(x => x.Phone).HasName("idx_phone");
                 b.HasIndex(x => x.TenantId).HasName("idx_tanent");
+                b.HasIndex(x => x.OrganizationUnitId).HasName("idx_ou");
             });
 
             builder.Entity<BroadbandWarn>(b =>
             {
-                b.ToTable("PluginBroadbandWarn");
                 b.HasIndex(x => x.CountyId).HasName("idx_county");
                 b.HasIndex(x => x.DistinctId).HasName("idx_distinct");
                 b.HasIndex(x => x.OrganizationUnitId).HasName("idx_channel");

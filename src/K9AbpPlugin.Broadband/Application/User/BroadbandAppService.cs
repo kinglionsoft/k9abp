@@ -127,10 +127,10 @@ insert into plugin_broadband_warn(OrganizationUnitId,TenantId,UserId,CountyId,Di
 select a.OrganizationUnitId,
 a.TenantId,
 a.Id,
-c.CountyId,
-c.Id
-from plugin_broadband_user a inner join abp_distinct_organization_unit b on a.OrganizationUnitId = b.OrganizationUnitId
-inner join abp_distinct c on b.DistinctId = c.Id
+c.ParentId,
+b.ParentId
+from plugin_broadband_user a inner join abp_organization_unit b on a.OrganizationUnitId = b.Id
+inner join abp_organization_unit c on b.ParentId = c.Id
 where DATE_ADD(now(), INTERVAL {threshold} Day) > a.ExpireTime;
 ", null);
         }

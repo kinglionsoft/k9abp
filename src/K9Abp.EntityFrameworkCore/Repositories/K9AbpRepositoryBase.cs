@@ -16,7 +16,7 @@ namespace K9Abp.EntityFrameworkCore.Repositories
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
     /// <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
-    public class K9AbpRepositoryBase<TEntity, TPrimaryKey> 
+    public class K9AbpRepositoryBase<TEntity, TPrimaryKey>
         : EfCoreRepositoryBase<K9AbpDbContext, TEntity, TPrimaryKey>,
             IRepository<TEntity, TPrimaryKey>
         where TEntity : class, IEntity<TPrimaryKey>
@@ -34,7 +34,7 @@ namespace K9Abp.EntityFrameworkCore.Repositories
             {
                 parameters = new object[0];
             }
-            return  Context.Database.ExecuteSqlCommandAsync(sql, parameters, token);
+            return Context.Database.ExecuteSqlCommandAsync(sql, parameters, token);
         }
 
         public virtual Task BulkInsertAsync(IEnumerable<TEntity> entities, CancellationToken token = default)

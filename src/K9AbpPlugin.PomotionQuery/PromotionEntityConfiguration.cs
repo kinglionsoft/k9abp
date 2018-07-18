@@ -12,13 +12,11 @@ namespace K9AbpPlugin.PomotionQuery
 
             builder.Entity<PromotionTarget>(b =>
             {
-                b.ToTable("PluginPromotionTarget");
                 b.HasIndex(x => new { x.Phone, x.TenantId, x.PromotionId});
             });
 
             builder.Entity<QueryLog>(b =>
             {
-                b.ToTable("PluginQueryLog");
                 b.HasIndex(x => new {x.TenantId, x.OrganizationUnitId});
             });
         }
