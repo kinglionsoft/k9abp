@@ -12,7 +12,7 @@ namespace K9Abp.Web.Core.Authentication.External
             ProviderInfo = providerInfo;
         }
 
-        public async Task<bool> IsValidUser(string userId, string accessCode)
+        public virtual async Task<bool> IsValidUser(string userId, string accessCode)
         {
             var userInfo = await GetUserInfo(accessCode);
             return userInfo.ProviderKey == userId;

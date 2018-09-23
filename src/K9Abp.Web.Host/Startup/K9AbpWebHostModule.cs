@@ -10,6 +10,8 @@ using K9Abp.Core.MultiTenancy;
 using K9Abp.EntityFrameworkCore;
 using K9Abp.Web.Core;
 using K9Abp.Web.Core.Authentication.External;
+using K9Abp.Web.Host.Wechat;
+using Abp.Zero.Configuration;
 
 namespace K9Abp.Web.Host.Startup
 {
@@ -28,6 +30,7 @@ namespace K9Abp.Web.Host.Startup
 
         public override void PreInitialize()
         {
+            Configuration.Modules.Zero().UserManagement.ExternalAuthenticationSources.Add<Wechat.WechatExternalAuthSource>();
             Configuration.Modules.AbpWebCommon().MultiTenancy.DomainFormat = _appConfiguration["App:ServerRootAddress"] ?? "http://localhost:5000/";
         }
 
@@ -58,8 +61,10 @@ namespace K9Abp.Web.Host.Startup
         private void ConfigureExternalAuthProviders()
         {
             var externalAuthConfiguration = IocManager.Resolve<ExternalAuthConfiguration>();
-            
+
             //not implemented yet. 
+            externalAuthConfiguration.Providers.Add(
+                new ExternalLoginProviderInfo("wechat","id","secret", typeof(WechatExternalAuthProviderApi)));
         }
     }
 }

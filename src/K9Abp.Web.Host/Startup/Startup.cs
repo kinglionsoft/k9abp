@@ -18,6 +18,8 @@ using K9Abp.Core.Configuration;
 using K9Abp.Core.Identity;
 using K9Abp.Core.Web;
 using K9Abp.Web.Core.Authentication.JwtBearer;
+using Senparc.CO2NET.RegisterServices;
+using Senparc.Weixin.RegisterServices;
 #if DEBUG
 using Swashbuckle.AspNetCore.Swagger;
 #endif
@@ -101,6 +103,15 @@ namespace K9Abp.Web.Host.Startup
                 options.IncludeXmlComments(xmlForApi);
             });
 #endif
+
+            /*
+             * CO2NET 是从 Senparc.Weixin 分离的底层公共基础模块，经过了长达 6 年的迭代优化。
+             * 关于 CO2NET 在所有项目中的通用设置可参考 CO2NET 的 Sample：
+             * https://github.com/Senparc/Senparc.CO2NET/blob/master/Sample/Senparc.CO2NET.Sample.netcore/Startup.cs
+             */
+
+            services.AddSenparcGlobalServices(_appConfiguration)//Senparc.CO2NET 全局注册
+                .AddSenparcWeixinServices(_appConfiguration);//Senparc.Weixin 注册
 
             // Configure Abp and Dependency Injection
             return services.AddAbp<K9AbpWebHostModule>(options =>

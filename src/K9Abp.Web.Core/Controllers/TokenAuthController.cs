@@ -246,6 +246,7 @@ namespace K9Abp.Web.Core.Controllers
         public async Task<ExternalAuthenticateResultModel> ExternalAuthenticate([FromBody] ExternalAuthenticateModel model)
         {
             var externalUser = await GetExternalUserInfo(model);
+            var user = await _userManager.FindAsync(1, new UserLoginInfo(model.AuthProvider, model.ProviderKey, model.AuthProvider));
 
             var loginResult = await _logInManager.LoginAsync(new UserLoginInfo(model.AuthProvider, model.ProviderKey, model.AuthProvider), GetTenancyNameOrNull());
 

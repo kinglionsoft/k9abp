@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Senparc.CO2NET" Version="0.2.0" />
+    <PackageReference Include="Senparc.Weixin.MP" Version="15.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\K9Abp.Core\K9Abp.Core.csproj" />
+  </ItemGroup>
+
+</Project>
