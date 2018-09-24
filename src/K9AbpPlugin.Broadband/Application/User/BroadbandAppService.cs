@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Application.Services;
+using Abp.Auditing;
 using Abp.Domain.Repositories;
 using Abp.ObjectMapping;
 using Abp.Organizations;
@@ -22,7 +23,7 @@ namespace K9AbpPlugin.Broadband.User
 
         public BroadbandAppService(IRepository<BroadbandUser> userUepository,
             OrganizationUnitManager organizationUnitManager, 
-            IRepository<BroadbandWarn> warnRepository, 
+            IRepository<BroadbandWarn> warnRepository,
             IOrganizationUnitCache organizationUnitCache)
         {
             _userRepository = userUepository;

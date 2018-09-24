@@ -1,16 +1,15 @@
-﻿using System.Linq;
-using Abp.Dependency;
+﻿using Abp.Dependency;
 using Abp.Domain.Entities.Caching;
 using Abp.Domain.Repositories;
 using Abp.Runtime.Caching;
-using Microsoft.EntityFrameworkCore;
 
 namespace Abp.Organizations
 {
-    public class OrganizationUnitCache: EntityCache<OrganizationUnit, OrganizationUnitCacheItem, long>,
+    public class OrganizationUnitCache : EntityCache<OrganizationUnit, OrganizationUnitCacheItem, long>,
         IOrganizationUnitCache, ITransientDependency
     {
-        public OrganizationUnitCache(ICacheManager cacheManager, IRepository<OrganizationUnit, long> repository, string cacheName = null) : base(cacheManager, repository, cacheName)
+        public OrganizationUnitCache(ICacheManager cacheManager, IRepository<OrganizationUnit, long> repository, string cacheName = null) 
+            : base(cacheManager, repository, cacheName)
         {
         }
 
