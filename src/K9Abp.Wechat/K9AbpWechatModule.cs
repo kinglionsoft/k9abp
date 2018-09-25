@@ -3,6 +3,7 @@ using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Zero.Configuration;
 using K9Abp.Web.Core.Authentication.External;
+using Senparc.Weixin.Entities;
 
 namespace K9Abp.Wechat
 {
@@ -23,7 +24,9 @@ namespace K9Abp.Wechat
             var externalAuthConfiguration = IocManager.Resolve<ExternalAuthConfiguration>();
 
             externalAuthConfiguration.Providers.Add(
-                new ExternalLoginProviderInfo("wechat", "id", "secret", typeof(WechatExternalAuthProviderApi)));
+                new ExternalLoginProviderInfo("wechat",
+                    "id", 
+                    "secret", typeof(WechatExternalAuthProviderApi)));
         }
     }
 }

@@ -18,8 +18,6 @@ using K9Abp.Core.Configuration;
 using K9Abp.Core.Identity;
 using K9Abp.Core.Web;
 using K9Abp.Web.Core.Authentication.JwtBearer;
-using Senparc.CO2NET.RegisterServices;
-using Senparc.Weixin.RegisterServices;
 #if DEBUG
 using Swashbuckle.AspNetCore.Swagger;
 #endif
@@ -50,6 +48,11 @@ namespace K9Abp.Web.Host.Startup
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+            });
+
             // MVC
             services.AddMvc(options =>
             {
@@ -103,15 +106,9 @@ namespace K9Abp.Web.Host.Startup
                 options.IncludeXmlComments(xmlForApi);
             });
 #endif
-
-            /*
-             * CO2NET 是从 Senparc.Weixin 分离的底层公共基础模块，经过了长达 6 年的迭代优化。
-             * 关于 CO2NET 在所有项目中的通用设置可参考 CO2NET 的 Sample：
-             * https://github.com/Senparc/Senparc.CO2NET/blob/master/Sample/Senparc.CO2NET.Sample.netcore/Startup.cs
-             */
-
-            services.AddSenparcGlobalServices(_appConfiguration)//Senparc.CO2NET 全局注册
-                .AddSenparcWeixinServices(_appConfiguration);//Senparc.Weixin 注册
+            
+            // Wechat
+            services.AddSenpacService(_appConfiguration);
 
             // Configure Abp and Dependency Injection
             return services.AddAbp<K9AbpWebHostModule>(options =>
@@ -137,6 +134,7 @@ namespace K9Abp.Web.Host.Startup
                 app.UseExceptionHandler("/error/");
                 app.UseStatusCodePagesWithRedirects("/error/{0}");
             }
+            app.UseSession();
 
             app.UseAbp(options =>
             {
@@ -161,6 +159,9 @@ namespace K9Abp.Web.Host.Startup
             // Integrate to OWIN
             app.UseAppBuilder(ConfigureOwinServices);
 #endif
+
+            // wechat
+            app.UserSenpacService(_environment, _appConfiguration);
 
             app.UseMvc(routes =>
             {

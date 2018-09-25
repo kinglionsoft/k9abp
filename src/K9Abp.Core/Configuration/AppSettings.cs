@@ -59,6 +59,9 @@
             public const string BillingLegalName = "App.UserManagement.BillingLegalName";
             public const string BillingAddress = "App.UserManagement.BillingAddress";
             public const string BillingTaxVatNo = "App.UserManagement.BillingTaxVatNo";
+            public const string WechatAppId = "App.TenantManagement.WechatAppId";
+            public const string WechatAppSecret = "App.TenantManagement.WechatAppSecret";
+            public const string WechatAppName = "App.TenantManagement.WechatAppName";
         }
 
         public static class UserManagement
