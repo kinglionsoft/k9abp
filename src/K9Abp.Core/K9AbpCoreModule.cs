@@ -59,7 +59,6 @@ namespace K9Abp.Core
             
             // Enable this line to create a multi-tenant application.
             Configuration.MultiTenancy.IsEnabled = K9AbpConsts.MultiTenancyEnabled;
-            Configuration.Modules.AbpWebCommon().MultiTenancy.DomainFormat = "{0}.k9.com";
 
             //Adding feature providers
             Configuration.Features.Providers.Add<AppFeatureProvider>();

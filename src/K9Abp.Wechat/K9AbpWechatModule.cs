@@ -1,5 +1,6 @@
 ﻿using System;
 using Abp.Modules;
+using Abp.Reflection.Extensions;
 using Abp.Zero.Configuration;
 using K9Abp.Web.Core.Authentication.External;
 
@@ -12,16 +13,15 @@ namespace K9Abp.Wechat
             Configuration.Modules.Zero().UserManagement.ExternalAuthenticationSources.Add<Wechat.WechatExternalAuthSource>();
         }
 
-        public override void PostInitialize()
+        public override void Initialize()
         {
-            ConfigureExternalAuthProviders();
+            IocManager.RegisterAssemblyByConvention(typeof(K9AbpWechatModule).GetAssembly());
         }
 
-        private void ConfigureExternalAuthProviders()
+        public override void PostInitialize()
         {
             var externalAuthConfiguration = IocManager.Resolve<ExternalAuthConfiguration>();
 
-            //not implemented yet. 
             externalAuthConfiguration.Providers.Add(
                 new ExternalLoginProviderInfo("wechat", "id", "secret", typeof(WechatExternalAuthProviderApi)));
         }

@@ -12,7 +12,7 @@ namespace K9Abp.Wechat
             var user = new ExternalAuthUserInfo
             {
                 Provider = "wechat",
-                ProviderKey = openId,
+                ProviderKey = "openId1",
                 Name = "yc",
                 Surname = "yc",
                 EmailAddress = "yc@aspnetzero.com"

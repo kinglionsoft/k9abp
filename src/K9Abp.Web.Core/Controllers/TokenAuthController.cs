@@ -62,6 +62,8 @@ namespace K9Abp.Web.Core.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IdentityOptions _identityOptions;
 
+        public Abp.Web.MultiTenancy.IWebMultiTenancyConfiguration TenantStore { get; set; }
+
         public TokenAuthController(
             LogInManager logInManager,
             ITenantCache tenantCache,

@@ -33,7 +33,7 @@ namespace K9Abp.Web.Host.Startup
         public override void PreInitialize()
         {
             Configuration.Modules.Zero().UserManagement.ExternalAuthenticationSources.Add<Wechat.WechatExternalAuthSource>();
-            Configuration.Modules.AbpWebCommon().MultiTenancy.DomainFormat = _appConfiguration["App:ServerRootAddress"] ?? "http://localhost:5000/";
+            Configuration.Modules.AbpWebCommon().MultiTenancy.DomainFormat = _appConfiguration["App:MultiTenancy.DomainFormat"];
         }
 
         public override void Initialize()
