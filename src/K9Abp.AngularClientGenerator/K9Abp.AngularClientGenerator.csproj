@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NSwag.CodeGeneration.TypeScript" Version="11.17.15" />
+    <PackageReference Include="NSwag.CodeGeneration.TypeScript" Version="11.19.2" />
   </ItemGroup>
 
   <ItemGroup>

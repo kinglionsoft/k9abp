@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Data;
-using System.Threading.Tasks;
 using Hangfire;
 using Hangfire.Dashboard;
 using Hangfire.MySql.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using IsolationLevel = System.Data.IsolationLevel;
 
 namespace K9Abp.Web.Host.Startup
 {
@@ -17,7 +15,7 @@ namespace K9Abp.Web.Host.Startup
         {
             services.AddHangfire(config =>
             {
-               // config.UseNLogLogProvider(); // DO NOT enable this configuration.
+                // config.UseNLogLogProvider(); // DO NOT enable this configuration.
             });
             GlobalConfiguration.Configuration.UseStorage(
                 new MySqlStorage(
@@ -31,6 +29,7 @@ namespace K9Abp.Web.Host.Startup
                         PrepareSchemaIfNecessary = true,
                         DashboardJobListLimit = 50000,
                         TransactionTimeout = TimeSpan.FromMinutes(1),
+                       // TablesPrefix = "hangfire"
                     }));
             return services;
         }

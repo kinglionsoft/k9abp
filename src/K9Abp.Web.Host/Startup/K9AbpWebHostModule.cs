@@ -10,13 +10,15 @@ using K9Abp.Core.MultiTenancy;
 using K9Abp.EntityFrameworkCore;
 using K9Abp.Web.Core;
 using K9Abp.Web.Core.Authentication.External;
-using K9Abp.Web.Host.Wechat;
+using K9Abp.Wechat;
 using Abp.Zero.Configuration;
 
 namespace K9Abp.Web.Host.Startup
 {
     [DependsOn(
-       typeof(K9AbpWebCoreModule))]
+       typeof(K9AbpWebCoreModule),
+        typeof(K9AbpWechatModule))]
+    
     public class K9AbpWebHostModule: AbpModule
     {
         private readonly IHostingEnvironment _env;

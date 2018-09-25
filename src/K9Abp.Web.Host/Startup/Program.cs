@@ -34,7 +34,7 @@ namespace K9Abp.Web.Host.Startup
                         {
                             logging.SetMinimumLevel(LogLevel.Debug);
                         }
-                        logging.AddConsole();
+                       // logging.AddConsole();
                     }
                 })
                 .UseIISIntegration()

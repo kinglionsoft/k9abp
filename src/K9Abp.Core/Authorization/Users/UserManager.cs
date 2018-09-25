@@ -128,10 +128,5 @@ namespace K9Abp.Core.Authorization.Users
                 throw new UserFriendlyException(L("YouCannotRemoveUserRolePermissionsFromAdminUser"));
             }
         }
-
-        private string L(string name)
-        {
-            return _localizationManager.GetString(AbpConsts.LocalizationSourceName, name);
-        }
     }
 }

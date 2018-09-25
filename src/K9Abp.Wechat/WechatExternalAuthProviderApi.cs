@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using K9Abp.Core.Authorization.External;
+using K9Abp.Web.Core.Authentication.External;
 
 namespace K9Abp.Wechat
 {
@@ -12,8 +12,12 @@ namespace K9Abp.Wechat
             var user = new ExternalAuthUserInfo
             {
                 Provider = "wechat",
-                ProviderKey = openId
+                ProviderKey = openId,
+                Name = "yc",
+                Surname = "yc",
+                EmailAddress = "yc@aspnetzero.com"
             };
+            return Task.FromResult(user);
         }
     }
 }

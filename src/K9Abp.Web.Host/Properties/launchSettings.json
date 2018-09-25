@@ -17,9 +17,10 @@
     },
     "K9Abp.Web.Host": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "http://localhost:5000",
+      "launchBrowser": false,
+      "launchUrl": "http://localhost",
       "environmentVariables": {
+        "ASPNETCORE_URLS": "http://*:80", 
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
