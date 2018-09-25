@@ -1,4 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Abp.Configuration;
+using Abp.Domain.Repositories;
+using Abp.Domain.Uow;
+using K9Abp.Core.Configuration;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -16,7 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static void AddSenpacService(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSenparcGlobalServices(configuration)//Senparc.CO2NET 全局注册
+            services.AddSenparcGlobalServices(configuration) //Senparc.CO2NET 全局注册
                 .AddSenparcWeixinServices(configuration);//Senparc.Weixin 注册
         }
 
@@ -39,14 +46,40 @@ namespace Microsoft.Extensions.DependencyInjection
             //register.UseSenparcGlobal(false, GetExCacheStrategies);
 
             //开始注册微信信息，必须！
-            register.UseSenparcWeixin(senparcWeixinSetting, senparcSetting)
-                //注册公众号（可注册多个）
-                .RegisterMpAccount(senparcWeixinSetting.WeixinAppId,
-                    senparcWeixinSetting.WeixinAppSecret,
-                    configuration["SenparcWeixinSetting:MpName"]);
+            register.UseSenparcWeixin(senparcWeixinSetting);
+            // TODO: 注册公众号（可注册多个） 需要从数据库中读取各个租户额配置数据，全部注册
+
+            foreach (var mp in GetWeixinMpSettings(app.ApplicationServices))
+            {
+                register.RegisterMpAccount(mp[0], mp[1], mp[2]);
+            }
 
             //除此以外，仍然可以在程序任意地方注册公众号或小程序：
             //AccessTokenContainer.Register(appId, appSecret, name);//命名空间：Senparc.Weixin.MP.Containers
+        }
+
+        private static List<string[]> GetWeixinMpSettings(IServiceProvider serviceProvider)
+        {
+            var uow = serviceProvider.GetService<IUnitOfWorkManager>();
+            var repository = serviceProvider.GetService<IRepository<Setting, long>>();
+            string[] names =
+            {
+                AppSettings.TenantManagement.WechatAppId,
+                AppSettings.TenantManagement.WechatAppSecret,
+                AppSettings.TenantManagement.WechatAppName
+            };
+            using (uow.Current.SetTenantId(null))
+            {
+                return repository.GetAll()
+                     .Where(x => names.Contains(x.Name) && x.TenantId != null)
+                     .GroupBy(x => x.TenantId)
+                     .Select(x => new []
+                     {
+                        x.First(n => n.Name == AppSettings.TenantManagement.WechatAppId).Value,
+                        x.First(n => n.Name == AppSettings.TenantManagement.WechatAppSecret).Value,
+                        x.First(n => n.Name == AppSettings.TenantManagement.WechatAppName).Value
+                     }).ToList();
+            }
         }
     }
 }
