@@ -62,8 +62,6 @@ namespace K9Abp.Web.Core.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IdentityOptions _identityOptions;
 
-        public Abp.Web.MultiTenancy.IWebMultiTenancyConfiguration TenantStore { get; set; }
-
         public TokenAuthController(
             LogInManager logInManager,
             ITenantCache tenantCache,
@@ -248,8 +246,6 @@ namespace K9Abp.Web.Core.Controllers
         public async Task<ExternalAuthenticateResultModel> ExternalAuthenticate([FromBody] ExternalAuthenticateModel model)
         {
             var externalUser = await GetExternalUserInfo(model);
-            var user = await _userManager.FindAsync(2, new UserLoginInfo(model.AuthProvider, model.ProviderKey, model.AuthProvider));
-
             var loginResult = await _logInManager.LoginAsync(new UserLoginInfo(model.AuthProvider, model.ProviderKey, model.AuthProvider), GetTenancyNameOrNull());
 
             switch (loginResult.Result)

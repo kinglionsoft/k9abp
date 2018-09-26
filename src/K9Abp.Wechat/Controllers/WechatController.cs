@@ -1,5 +1,8 @@
-﻿using Abp.AspNetCore;
+﻿using System.Threading.Tasks;
+using Abp.AspNetCore;
 using Abp.AspNetCore.Mvc.Controllers;
+using Abp.Configuration;
+using K9Abp.Core.Configuration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -11,11 +14,10 @@ namespace K9Abp.Wechat.Controllers
 {
     public class WechatController : AbpController
     {
-        private readonly SenparcWeixinSetting _weixinSetting;
-
-        public WechatController(IOptions<SenparcWeixinSetting> settingsAccessor)
+        private readonly ISettingManager _settingManager;
+        public WechatController(ISettingManager settingManager)
         {
-            _weixinSetting = settingsAccessor.Value;
+            _settingManager = settingManager;
         }
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace K9Abp.Wechat.Controllers
         /// <param name="state"></param>
         /// <param name="returnUrl">用户最初尝试进入的页面</param>
         /// <returns></returns>
-        public IActionResult BaseCallback(string code, string state, string returnUrl)
+        public async Task<IActionResult> BaseCallback(string code, string state, string returnUrl)
         {
             if (string.IsNullOrEmpty(code))
             {
@@ -33,7 +35,9 @@ namespace K9Abp.Wechat.Controllers
             }
 
             //通过，用code换取access_token
-            var result = OAuthApi.GetAccessToken(_weixinSetting.WeixinAppId, _weixinSetting.WeixinAppSecret, code);
+            var appId = await _settingManager.GetSettingValueAsync(AppSettings.TenantManagement.WechatAppId);
+            var appSecret = await _settingManager.GetSettingValueAsync(AppSettings.TenantManagement.WechatAppSecret);
+            var result = OAuthApi.GetAccessToken(appId, appSecret, code);
             if (result.errcode != ReturnCode.请求成功)
             {
                 return Content("错误：" + result.errmsg);
