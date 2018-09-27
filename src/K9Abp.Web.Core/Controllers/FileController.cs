@@ -41,7 +41,7 @@ namespace K9Abp.Web.Core.Controllers
             System.IO.File.Delete(filePath);
             return File(fileBytes, file.FileType, file.FileName);
         }
-
+        
         [DisableAuditing]
         public async Task<string> ImportOu()
         {
@@ -88,9 +88,7 @@ namespace K9Abp.Web.Core.Controllers
         [DisableAuditing]
         public async Task<string> ImportUser()
         {
-            // var userManager = Request.HttpContext.RequestServices.GetService<UserManager>();
             var userRep = Request.HttpContext.RequestServices.GetService<IRepository<User, long>>();
-            // var ouRep = Request.HttpContext.RequestServices.GetService<IRepository<UserOrganizationUnit, long>>();
             var users = new List<User>();
             using (var reader = new StreamReader(@"d:\user.txt", Encoding.UTF8))
             {

@@ -32,7 +32,6 @@ namespace K9Abp.Web.Host.Startup
 
         public override void PreInitialize()
         {
-            Configuration.Modules.Zero().UserManagement.ExternalAuthenticationSources.Add<Wechat.WechatExternalAuthSource>();
             Configuration.Modules.AbpWebCommon().MultiTenancy.DomainFormat = _appConfiguration["App:MultiTenancy.DomainFormat"];
         }
 

@@ -72,7 +72,7 @@ namespace K9Abp.Application.Authorization.Accounts
         {
             if (UseCaptchaOnRegistration())
             {
-                await RecaptchaValidator.ValidateAsync(input.CaptchaResponse);
+                RecaptchaValidator.Validate(input.CaptchaResponse);
             }
 
             var user = await _userRegistrationManager.RegisterAsync(

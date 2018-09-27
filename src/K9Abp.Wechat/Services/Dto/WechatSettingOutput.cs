@@ -1,6 +1,6 @@
 ﻿namespace K9Abp.Wechat.Services
 {
-    internal class WechatSettingOutput
+    public class WechatSettingOutput
     {
         public string AppId { get; set; }
 

@@ -35,6 +35,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="2.1.2" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0005" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
     <PackageReference Include="PaulMiami.AspNetCore.Mvc.Recaptcha" Version="1.2.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />

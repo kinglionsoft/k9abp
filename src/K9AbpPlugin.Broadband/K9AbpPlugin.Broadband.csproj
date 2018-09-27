@@ -42,6 +42,10 @@
     <ProjectReference Include="..\K9Abp.Application\K9Abp.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\Account\" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /E /Y /Q &quot;$(TargetDir)$(TargetFileName)&quot; ..\K9Abp.Web.Host\Plugins\&#xD;&#xA;xcopy /E /Y /Q &quot;$(TargetDir)$(TargetName).pdb&quot; ..\K9Abp.Web.Host\Plugins\" />
   </Target>

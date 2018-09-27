@@ -6,9 +6,14 @@ namespace K9Abp.Application.Security.Recaptcha
     {
         public static NullRecaptchaValidator Instance { get; } = new NullRecaptchaValidator();
 
-        public Task ValidateAsync(string captchaResponse)
+        public void Validate(string captchaResponse)
         {
-            return Task.CompletedTask;
+            
+        }
+
+        public byte[] GetCaptcha(int length = 4)
+        {
+            return new byte[0];
         }
     }
 }

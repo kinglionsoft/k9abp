@@ -84,7 +84,7 @@ namespace K9Abp.Application.MultiTenancy
 
                 if (UseCaptchaOnRegistration())
                 {
-                    await _recaptchaValidator.ValidateAsync(input.CaptchaResponse);
+                    _recaptchaValidator.Validate(input.CaptchaResponse);
                 }
 
                 //Getting host-specific settings

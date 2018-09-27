@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\Wechat\Bind.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Wechat\Bind.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Senparc.CO2NET" Version="0.2.0" />
     <PackageReference Include="Senparc.Weixin.MP" Version="15.1.1" />
   </ItemGroup>
