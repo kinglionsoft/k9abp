@@ -133,8 +133,7 @@ namespace K9Abp.Application.Authorization.Users
                         Id = userAccount.UserId,
                         TenantId = userAccount.TenantId,
                         TenancyName = tenant == null ? "." : tenant.TenancyName,
-                        Username = userAccount.UserName,
-                        LastLoginTime = userAccount.LastLoginTime
+                        Username = userAccount.UserName
                     }).OrderBy(sorting);
         }
     }

@@ -1,0 +1,14 @@
+<Project>
+ <PropertyGroup>
+   <PackageProjectUrl>https://github.com/kinglionsoft/k9abp</PackageProjectUrl>
+   <RepositoryType>git</RepositoryType>
+   <RepositoryRoot>$(MSBuildThisFileDirectory)</RepositoryRoot>
+   <RepositoryUrl>https://github.com/kinglionsoft/k9abp</RepositoryUrl>
+   <LangVersion>7.3</LangVersion>
+   <NoWarn>1701;1702;1591</NoWarn>
+ </PropertyGroup>
+ <PropertyGroup Condition="'$(PublishDocumentationFile)' == ''">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PublishDocumentationFile Condition="'$(GenerateDocumentationFile)' == 'true'">true</PublishDocumentationFile>
+ </PropertyGroup>
+</Project>

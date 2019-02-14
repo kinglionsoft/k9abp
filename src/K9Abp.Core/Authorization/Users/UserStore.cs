@@ -2,6 +2,7 @@
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.Linq;
+using Abp.Organizations;
 using K9Abp.Core.Authorization.Roles;
 
 namespace K9Abp.Core.Authorization.Users
@@ -18,8 +19,10 @@ namespace K9Abp.Core.Authorization.Users
             IRepository<Role> roleRepository,
             IAsyncQueryableExecuter asyncQueryableExecuter, 
             IUnitOfWorkManager unitOfWorkManager,
-            IRepository<UserClaim, long> userCliamRepository,
-            IRepository<UserPermissionSetting, long> userPermissionSettingRepository)
+            IRepository<UserClaim, long> userClaimRepository,
+            IRepository<UserPermissionSetting, long> userPermissionSettingRepository,
+            IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository,
+            IRepository<OrganizationUnitRole, long> organizationUnitRoleRepository)
             : base(
                 unitOfWorkManager,
                 userRepository,
@@ -27,8 +30,10 @@ namespace K9Abp.Core.Authorization.Users
                 asyncQueryableExecuter,
                 userRoleRepository,
                 userLoginRepository,
-                userCliamRepository,
-                userPermissionSettingRepository)
+                userClaimRepository,
+                userPermissionSettingRepository,
+                userOrganizationUnitRepository,
+                organizationUnitRoleRepository)
         {
         }
     }

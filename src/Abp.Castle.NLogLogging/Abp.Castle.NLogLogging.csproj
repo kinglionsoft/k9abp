@@ -13,22 +13,10 @@
     <Description>Abp.Castle.NLogLogging</Description>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;1705;1591</NoWarn>
-    <LangVersion>7.1</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <LangVersion>7.1</LangVersion>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="NLog" Version="5.0.0-beta11" />
-    <PackageReference Include="Castle.LoggingFacility" Version="4.1.0" />
+    <PackageReference Include="Castle.LoggingFacility" Version="5.0.0" />
     <PackageReference Include="Castle.Core" Version="4.3.1" />
   </ItemGroup>
 
 </Project>
-
-
-

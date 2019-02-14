@@ -57,6 +57,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9AbpPlugin.Broadband", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K9Abp.Wechat", "src\K9Abp.Wechat\K9Abp.Wechat.csproj", "{00F9350C-53B9-454A-8212-F9053FE476ED}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E536D8B6-C311-403B-88AD-AC624AD23330}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.build.props = Directory.build.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

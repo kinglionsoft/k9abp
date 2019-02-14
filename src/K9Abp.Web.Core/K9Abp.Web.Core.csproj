@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <VersionPrefix>1.0.0.0</VersionPrefix>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <AssemblyName>K9Abp.Web.Core</AssemblyName>
     <PackageId>K9Abp.Web.Core</PackageId>
@@ -18,31 +18,23 @@
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <DefineConstants>FEATURE_SIGNALR</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netcoreapp2.1\K9Abp.Web.Core.xml</DocumentationFile>
-    <NoWarn>1701;1702;1705;1591</NoWarn>
-    <LangVersion>7.1</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <LangVersion>7.1</LangVersion>
-  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\K9Abp.Application\K9Abp.Application.csproj" />
     <ProjectReference Include="..\K9Abp.EntityFrameworkCore\K9Abp.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\K9Abp.NgAlain\K9Abp.NgAlain.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="2.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="2.2.0" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0005" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
     <PackageReference Include="PaulMiami.AspNetCore.Mvc.Recaptcha" Version="1.2.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="Abp.HangFire.AspNetCore" Version="3.8.2" />
-    <PackageReference Include="Abp.RedisCache" Version="3.8.2" />
-    <PackageReference Include="System.Net.Http" Version="4.3.3" />
-    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.6.0" />
+    <PackageReference Include="Abp.HangFire.AspNetCore" Version="4.2.0" />
+    <PackageReference Include="Abp.RedisCache" Version="4.2.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
     
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
